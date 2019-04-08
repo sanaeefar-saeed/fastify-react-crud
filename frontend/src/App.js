@@ -1,18 +1,19 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
-import categoryCreate from "./components/category/create.component";
-import categoryEdit from "./components/category/edit.component";
+import CreateCategory from "./components/category/create.component";
+import EditCategory from "./components/category/edit.component";
 import categoryIndex from "./components/category/index.component";
+
 import productCreate from "./components/product/create.component";
 import productEdit from "./components/product/edit.component";
 import productIndex from "./components/product/index.component";
 
 import "./App.css";
 
-class App extends Component {
+export default class App extends Component {
   render() {
     return (
       <Router>
@@ -48,21 +49,20 @@ class App extends Component {
                 </li>
               </ul>
             </div>
-          </nav>{" "}
-          <br />
-          <h2>EBG Admin Panel</h2> <br />
+          </nav>
+          {" "}
+          <br/>
+          <h2>EBG Admin Panel</h2> <br/>
           <Switch>
-            <Route exact path="/category/create" component={categoryCreate} />
-            <Route path="/category/edit/:id" component={categoryEdit} />
-            <Route path="/category/index" component={categoryIndex} />
-            <Route exact path="/product/create" component={productCreate} />
-            <Route path="/product/edit/:id" component={productEdit} />
-            <Route path="/product/index" component={productIndex} />
+            <Route exact path="/category/create" component={CreateCategory}/>
+            <Route path="/category/edit/:id" component={EditCategory}/>
+            <Route path="/category/index" component={categoryIndex}/>
+            <Route exact path="/product/create" component={productCreate}/>
+            <Route path="/product/edit/:id" component={productEdit}/>
+            <Route path="/product/index" component={productIndex}/>
           </Switch>
         </div>
       </Router>
     );
   }
 }
-
-export default App;

@@ -1,20 +1,15 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import axios from "axios";
 
-export default class categoryEdit extends Component {
-  constructor(props) {
-    super(props);
-    this.onChangeCategoryName = this.onChangeCategoryName.bind(this);
-    this.onChangeParentId = this.onChangeParentId.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-
-    this.state = {
-      categoryName: "",
-      parentId: ""
-    };
-  }
+export default class EditCategory extends Component {
+  state = {
+    categoryName: "",
+    parentId: "",
+    editError: false
+  };
 
   componentDidMount() {
+    console.log(this.props.match.params._id);
     axios
       .get("http://localhost:4000/api/categories/" + this.props.match.params.id)
       .then(response => {
@@ -23,41 +18,30 @@ export default class categoryEdit extends Component {
           parentId: response.data.parentId
         });
       })
-      .catch(function(error) {
-        console.log(error);
-      });
+      .catch(err => this.setState({editError: err}));
   }
 
-  onChangeCategoryName(e) {
-    this.setState({
-      categoryName: e.target.value
-    });
-  }
-  onChangeParentId(e) {
-    this.setState({
-      parentId: e.target.value
-    });
-  }
 
-  onSubmit(e) {
+  onChangeCategoryName = e => this.setState({categoryName: e.target.value});
+
+  onChangeParentId = e => this.setState({parentId: e.target.value});
+
+  onSubmit = e => {
     e.preventDefault();
-    const obj = {
+    const editedObject = {
       categoryName: this.state.categoryName,
       parentId: this.state.parentId
     };
     axios
-      .put(
-        "http://localhost:4000/api/categories/" + this.props.match.params.id,
-        obj
-      )
+      .put("http://localhost:4000/api/categories/" + this.props.match.params.id, editedObject)
       .then(res => console.log(res.data));
 
-    this.props.history.push("/index");
-  }
+    this.props.history.push("/category/index");
+  };
 
   render() {
     return (
-      <div style={{ marginTop: 10 }}>
+      <div style={{marginTop: 10}}>
         <h3 align="center">Update Category</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">

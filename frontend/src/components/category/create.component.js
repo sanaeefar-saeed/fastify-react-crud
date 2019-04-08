@@ -1,48 +1,39 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import axios from "axios";
 
-export default class categoryCreate extends Component {
-  constructor(props) {
-    super(props);
-    this.onChangeCategoryName = this.onChangeCategoryName.bind(this);
-    this.onChangeParentId = this.onChangeParentId.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+export default class CreateCategory extends Component {
+  state = {
+    categoryName: "",
+    parentId: ""
+  };
 
-    this.state = {
-      categoryName: "",
-      parentId: ""
-    };
-  }
-  onChangeCategoryName(e) {
-    this.setState({
-      categoryName: e.target.value
-    });
-  }
-  onChangeParentId(e) {
-    this.setState({
-      parentId: e.target.value
-    });
-  }
+  onChangeCategoryName = e => {
+    this.setState({categoryName: e.target.value})
+  };
 
-  onSubmit(e) {
+  onChangeParentId = e => {
+    this.setState({parentId: e.target.value})
+  };
+
+  onSubmit = e => {
     e.preventDefault();
-    const obj = {
+    const newCategory = {
       categoryName: this.state.categoryName,
       parentId: this.state.parentId
     };
     axios
-      .post("http://localhost:4000/api/categories", obj)
+      .post("http://localhost:4000/api/categories", newCategory)
       .then(res => console.log(res.data));
 
     this.setState({
       categoryName: "",
       parentId: ""
     });
-  }
+  };
 
   render() {
     return (
-      <div style={{ marginTop: 10 }}>
+      <div style={{marginTop: 10}}>
         <h3>Add New Category</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
