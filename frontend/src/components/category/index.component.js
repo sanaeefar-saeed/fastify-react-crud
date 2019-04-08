@@ -2,23 +2,23 @@ import React, { Component } from "react";
 import axios from "axios";
 import TableRow from "./TableRow";
 
-export default class Index extends Component {
+export default class categoryIndex extends Component {
   constructor(props) {
     super(props);
-    this.state = { business: [] };
+    this.state = { category: [] };
   }
   componentDidMount() {
     axios
-      .get("http://localhost:4000/business")
+      .get("http://localhost:4000/api/categories")
       .then(response => {
-        this.setState({ business: response.data });
+        this.setState({ category: response.data });
       })
       .catch(function(error) {
         console.log(error);
       });
   }
   tabRow() {
-    return this.state.business.map(function(object, i) {
+    return this.state.category.map(function(object, i) {
       return <TableRow obj={object} key={i} />;
     });
   }
@@ -30,10 +30,8 @@ export default class Index extends Component {
         <table className="table table-striped" style={{ marginTop: 20 }}>
           <thead>
             <tr>
-              <th>Person</th>
-              <th>Business</th>
-              <th>GST Number</th>
-              <th colSpan="2">Action</th>
+              <th>ID</th>
+              <th>Category Name</th>
             </tr>
           </thead>
           <tbody>{this.tabRow()}</tbody>
