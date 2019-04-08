@@ -6,44 +6,40 @@ export default class CategoryIndex extends Component {
   state = {
     categories: [],
     isFetchingData: true,
-    error: false
+    fetchCategoryError: false,
+    deleteCategoryError: false
+  };
+
+  fetchData = () => {
+    axios
+      .get("http://localhost:4000/api/categories")
+      .then(response => {
+        this.setState({
+          categories: response.data,
+          isFetchingData: false
+        });
+      })
+      .catch(err => {
+        this.setState({fetchCategoryError: err});
+      })
   };
 
   componentDidMount() {
-    axios
-      .get("http://localhost:4000/api/categories")
-      .then(response => {
-        this.setState({
-          categories: response.data,
-          isFetchingData: false
-        });
-      })
-      .catch(error => {
-        this.setState({error});
-        console.log(error);
-      })
+    this.fetchData()
   }
 
+  // @novonimo
+  // for re-render after submit edit !
   componentDidUpdate(prevProps, prevState, snapshot) {
-    axios
-      .get("http://localhost:4000/api/categories")
-      .then(response => {
-        this.setState({
-          categories: response.data,
-          isFetchingData: false
-        });
-      })
-      .catch(error => {
-        this.setState({error});
-        console.log(error);
-      })
+    this.fetchData()
   }
 
   handleDelete = id => {
     const categories = this.state.categories.filter(category => category._id !== id);
     axios
       .delete("http://localhost:4000/api/categories/" + id)
-      .catch(err => console.log(err));
+      .catch(err=>this.setState({deleteCategoryError: err}));
+
     this.setState({categories})
   };
 

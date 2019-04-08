@@ -2,14 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="938b8a10-f690-4721-9b88-ee9681d5b049" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/nima.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/nima.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/category/TableRow.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/category/TableRow.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/category/create.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/category/create.component.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/category/edit.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/category/edit.component.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/category/index.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/category/index.component.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/product/TableRow.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/product/TableRow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/product/create.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/product/create.component.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/product/edit.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/product/edit.component.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/product/index.component.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/product/index.component.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.css" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,10 +25,34 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/App.js">
+        <entry file="file://$PROJECT_DIR$/frontend/src/components/product/create.component.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="56" column="57" selection-start-line="56" selection-start-column="57" selection-end-line="56" selection-end-column="57" />
+            <state relative-caret-position="357">
+              <caret line="21" column="47" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/components/product/edit.component.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="629">
+              <caret line="37" column="59" selection-start-line="37" selection-start-column="59" selection-end-line="37" selection-end-column="59" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/frontend/src/components/product/index.component.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -35,12 +61,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/components/category/create.component.js">
+        <entry file="file://$PROJECT_DIR$/frontend/src/components/product/TableRow.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="408">
-              <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
+              <caret line="24" column="4" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
               <folding>
-                <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#0#26#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -49,8 +75,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/components/category/TableRow.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" selection-start-line="8" selection-end-line="8" />
+            <state>
+              <caret column="7" lean-forward="true" selection-end-line="28" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/components/category/index.component.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="50" lean-forward="true" selection-end-line="70" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -59,22 +97,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/components/category/edit.component.js">
+        <entry file="file://$PROJECT_DIR$/frontend/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
-              <caret line="35" column="93" selection-start-line="35" selection-start-column="93" selection-end-line="35" selection-end-column="93" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/frontend/src/components/category/index.component.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="580">
-              <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
+            <state relative-caret-position="431">
+              <caret line="61" column="64" selection-start-line="61" selection-start-column="52" selection-end-line="61" selection-end-column="64" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -96,10 +122,17 @@
     <findStrings>
       <find>categoryCreate</find>
       <find>handleSubmit</find>
-      <find>category</find>
       <find>categoryIndex</find>
-      <find>obj</find>
       <find>categoryEdit</find>
+      <find>onChangeCategoryName</find>
+      <find>onChangeParentId</find>
+      <find>obj</find>
+      <find>categoryName</find>
+      <find>parentId</find>
+      <find>error</find>
+      <find>fetchCategoryError</find>
+      <find>categories</find>
+      <find>category</find>
     </findStrings>
     <replaceStrings>
       <replace>CategoryCreate</replace>
@@ -109,6 +142,16 @@
       <replace>newCategory</replace>
       <replace>CreateCategory</replace>
       <replace>EditCategory</replace>
+      <replace>onChangeProductName</replace>
+      <replace>onChange</replace>
+      <replace>onChangeProductId</replace>
+      <replace>productName</replace>
+      <replace>productId</replace>
+      <replace>fetchCategoryError</replace>
+      <replace>deleteProductError</replace>
+      <replace>fetchProductError</replace>
+      <replace>products</replace>
+      <replace>product</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -125,11 +168,15 @@
         <option value="$PROJECT_DIR$/frontend/src/components/category/categoryIndex.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/category/createCategory.js" />
         <option value="$PROJECT_DIR$/frontend/src/index.js" />
-        <option value="$PROJECT_DIR$/frontend/src/components/category/create.component.js" />
-        <option value="$PROJECT_DIR$/frontend/src/App.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/category/edit.component.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/category/TableRow.js" />
+        <option value="$PROJECT_DIR$/frontend/src/components/category/create.component.js" />
+        <option value="$PROJECT_DIR$/frontend/src/App.js" />
+        <option value="$PROJECT_DIR$/frontend/src/components/product/create.component.js" />
+        <option value="$PROJECT_DIR$/frontend/src/components/product/edit.component.js" />
         <option value="$PROJECT_DIR$/frontend/src/components/category/index.component.js" />
+        <option value="$PROJECT_DIR$/frontend/src/components/product/TableRow.js" />
+        <option value="$PROJECT_DIR$/frontend/src/components/product/index.component.js" />
       </list>
     </option>
   </component>
@@ -231,12 +278,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1554736121044</updated>
-      <workItem from="1554736125318" duration="14649000" />
+      <workItem from="1554736125318" duration="18143000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14649000" />
+    <option name="totallyTimeSpent" value="18143000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -295,27 +342,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/product/edit.component.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/product/create.component.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-776">
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/index.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -326,10 +352,63 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/category/edit.component.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="35" column="93" selection-start-line="35" selection-start-column="93" selection-end-line="35" selection-end-column="93" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/index.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/category/create.component.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="63" selection-start-line="27" selection-start-column="63" selection-end-line="27" selection-end-column="63" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="56" column="57" selection-start-line="56" selection-start-column="57" selection-end-line="56" selection-end-column="57" />
+        <state relative-caret-position="431">
+          <caret line="61" column="64" selection-start-line="61" selection-start-column="52" selection-end-line="61" selection-end-column="64" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/product/create.component.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="47" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/product/edit.component.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="37" column="59" selection-start-line="37" selection-start-column="59" selection-end-line="37" selection-end-column="59" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/category/index.component.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="50" lean-forward="true" selection-end-line="70" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -338,38 +417,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/components/category/TableRow.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        <state>
+          <caret column="7" lean-forward="true" selection-end-line="28" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/category/edit.component.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="35" column="93" selection-start-line="35" selection-start-column="93" selection-end-line="35" selection-end-column="93" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/category/create.component.js">
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/product/TableRow.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
-          <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
+          <caret line="24" column="4" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/category/index.component.js">
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/product/index.component.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="580">
-          <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
+        <state relative-caret-position="102">
+          <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>

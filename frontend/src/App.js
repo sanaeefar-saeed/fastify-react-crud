@@ -7,8 +7,8 @@ import CreateCategory from "./components/category/create.component";
 import EditCategory from "./components/category/edit.component";
 import categoryIndex from "./components/category/index.component";
 
-import productCreate from "./components/product/create.component";
-import productEdit from "./components/product/edit.component";
+import CreateProduct from "./components/product/create.component";
+import EditProduct from "./components/product/edit.component";
 import productIndex from "./components/product/index.component";
 
 import "./App.css";
@@ -57,8 +57,8 @@ export default class App extends Component {
             <Route exact path="/category/create" component={CreateCategory}/>
             <Route path="/category/edit/:id" component={EditCategory}/>
             <Route path="/category/index" component={categoryIndex}/>
-            <Route exact path="/product/create" component={productCreate}/>
-            <Route path="/product/edit/:id" component={productEdit}/>
+            <Route exact path="/product/create" component={CreateProduct}/>
+            <Route path="/product/edit/:id" component={EditProduct}/>
             <Route path="/product/index" component={productIndex}/>
           </Switch>
         </div>

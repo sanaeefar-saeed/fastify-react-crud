@@ -4,7 +4,8 @@ import axios from "axios";
 export default class CreateCategory extends Component {
   state = {
     categoryName: "",
-    parentId: ""
+    parentId: "",
+    createCategoryError: false
   };
 
   onChangeCategoryName = e => {
@@ -23,7 +24,8 @@ export default class CreateCategory extends Component {
     };
     axios
       .post("http://localhost:4000/api/categories", newCategory)
-      .then(res => console.log(res.data));
+      .then(res => console.log(res.data))
+      .catch(err => this.setState({createCategoryError: err}));
 
     this.setState({
       categoryName: "",

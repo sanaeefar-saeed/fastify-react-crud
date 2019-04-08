@@ -1,72 +1,57 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import axios from "axios";
 
-export default class Edit extends Component {
-  constructor(props) {
-    super(props);
-    this.onChangeCategoryName = this.onChangeCategoryName.bind(this);
-    this.onChangeParentId = this.onChangeParentId.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-
-    this.state = {
-      categoryName: "",
-      parentId: ""
-    };
-  }
+export default class EditProduct extends Component {
+  state = {
+    productName: "",
+    productId: "",
+    fetchProductError: false,
+    submitEditedProductError: false,
+  };
 
   componentDidMount() {
     axios
-      .get("http://localhost:4000/api/categories/" + this.props.match.params.id)
+      .get("http://localhost:4000/api/products/" + this.props.match.params.id)
       .then(response => {
         this.setState({
-          categoryName: response.data.categoryName,
-          parentId: response.data.parentId
+          productName: response.data.productName,
+          productId: response.data.productId
         });
       })
-      .catch(function(error) {
-        console.log(error);
-      });
+      .catch(err => this.setState({fetchProductError: err}))
   }
 
-  onChangeCategoryName(e) {
-    this.setState({
-      categoryName: e.target.value
-    });
-  }
-  onChangeParentId(e) {
-    this.setState({
-      parentId: e.target.value
-    });
-  }
+  onChangeProductName = e => this.setState({productName: e.target.value});
 
-  onSubmit(e) {
+  onChangeParentId = e => this.setState({productId: e.target.value});
+
+  onSubmit = e => {
     e.preventDefault();
-    const obj = {
-      categoryName: this.state.categoryName,
-      parentId: this.state.parentId
+    const editedProduct = {
+      productName: this.state.productName,
+      productId: this.state.productId
     };
     axios
-      .put(
-        "http://localhost:4000/api/categories/" + this.props.match.params.id,
-        obj
-      )
-      .then(res => console.log(res.data));
+      .put("http://localhost:4000/api/products/" + this.props.match.params.id, editedProduct)
+      // todo: remove console log for promise object !
+      .then(res => console.log(res.data))
+      .catch(err => this.setState({submitEditedProductError: err}));
 
-    this.props.history.push("/index");
-  }
+    this.props.history.push("/productIndex");
+  };
 
   render() {
     return (
-      <div style={{ marginTop: 10 }}>
+      <div style={{marginTop: 10}}>
         <h3 align="center">Update Category</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
-            <label>Category Name: </label>
+            <label>Product Name: </label>
             <input
               type="text"
               className="form-control"
-              value={this.state.categoryName}
-              onChange={this.onChangeCategoryName}
+              value={this.state.productName}
+              onChange={this.onChangeProductName}
             />
           </div>
           <div className="form-group">
@@ -74,7 +59,7 @@ export default class Edit extends Component {
             <input
               type="text"
               className="form-control"
-              value={this.state.parentId}
+              value={this.state.productId}
               onChange={this.onChangeParentId}
             />
           </div>

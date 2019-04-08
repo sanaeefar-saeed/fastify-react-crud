@@ -1,66 +1,55 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import axios from "axios";
 
-export default class Create extends Component {
-  constructor(props) {
-    super(props);
-    this.onChangeCategoryName = this.onChangeCategoryName.bind(this);
-    this.onChangeParentId = this.onChangeParentId.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+export default class CreateProduct extends Component {
+  state = {
+    productName: "",
+    productId: "",
+    createProductError: false
+  };
 
-    this.state = {
-      categoryName: "",
-      parentId: ""
-    };
-  }
-  onChangeCategoryName(e) {
-    this.setState({
-      categoryName: e.target.value
-    });
-  }
-  onChangeParentId(e) {
-    this.setState({
-      parentId: e.target.value
-    });
-  }
+  onChangeProductName = e => this.setState({productName: e.target.value});
 
-  onSubmit(e) {
+  onChangeProductId = e => this.setState({productId: e.target.value});
+
+  onSubmit = e => {
     e.preventDefault();
-    const obj = {
-      categoryName: this.state.categoryName,
-      parentId: this.state.parentId
+    const newProduct = {
+      productName: this.state.productName,
+      productId: this.state.productId
     };
     axios
-      .post("http://localhost:4000/api/categories", obj)
-      .then(res => console.log(res.data));
+      .post("http://localhost:4000/api/products", newProduct)
+      .then(res => console.log(res.data))
+      .catch(err => this.setState({createProductError: err}));
 
     this.setState({
-      categoryName: "",
-      parentId: ""
+      productName: "",
+      productId: ""
     });
-  }
+  };
 
   render() {
     return (
-      <div style={{ marginTop: 10 }}>
+      <div style={{marginTop: 10}}>
         <h3>Add New Category</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
-            <label>Category Name: </label>
+            <label>Product Name: </label>
             <input
               type="text"
               className="form-control"
-              value={this.state.categoryName}
-              onChange={this.onChangeCategoryName}
+              value={this.state.productName}
+              onChange={this.onChangeProductName}
             />
           </div>
           <div className="form-group">
-            <label>Parent ID: </label>
+            <label>Product ID: </label>
             <input
               type="text"
               className="form-control"
-              value={this.state.parentId}
-              onChange={this.onChangeParentId}
+              value={this.state.productId}
+              onChange={this.onChangeProductId}
             />
           </div>
           <div className="form-group">

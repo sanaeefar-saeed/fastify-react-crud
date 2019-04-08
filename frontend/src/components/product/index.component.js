@@ -1,42 +1,70 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import axios from "axios";
 import TableRow from "./TableRow";
 
-export default class Index extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { category: [] };
-  }
-  componentDidMount() {
+export default class CategoryIndex extends Component {
+  state = {
+    products: [] || '',
+    isFetchingData: true,
+    fetchProductError: false,
+    deleteProductError: false
+  };
+
+  fetchData = () => {
     axios
-      .get("http://localhost:4000/api/categories")
+      .get("http://localhost:4000/api/products")
       .then(response => {
-        this.setState({ category: response.data });
+        this.setState({
+          products: response.data,
+          isFetchingData: false
+        });
       })
-      .catch(function(error) {
-        console.log(error);
-      });
+      .catch(err => {
+        this.setState({fetchProductError: err});
+      })
+  };
+
+  componentDidMount() {
+    this.fetchData()
   }
-  tabRow() {
-    return this.state.category.map(function(object, i) {
-      return <TableRow obj={object} key={i} />;
-    });
+
+  // @novonimo
+  // for re-render after submit edit !
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    this.fetchData()
   }
+
+  handleDelete = id => {
+    const products = this.state.products.filter(product => product._id !== id);
+    axios
+      .delete("http://localhost:4000/api/products/" + id)
+      .catch(err => this.setState({deleteProductError: err}));
+
+    this.setState({products})
+  };
 
   render() {
     return (
       <div>
-        <h3 align="center">Category List</h3>
-        <table className="table table-striped" style={{ marginTop: 20 }}>
+        <h3 align="center">Product List</h3>
+        <table className="table table-striped" style={{marginTop: 20}}>
           <thead>
-            <tr>
-              <th>ID</th>
-              <th>Category Name</th>
-            </tr>
+          <tr>
+            <th>ID</th>
+            <th>Product Name</th>
+          </tr>
           </thead>
-          <tbody>{this.tabRow()}</tbody>
+          <tbody>
+          {this.state.products.map(product => {
+            return <TableRow
+              product={product}
+              key={product._id}
+              onDelete={this.handleDelete}
+            />
+          })}
+          </tbody>
         </table>
       </div>
-    );
+    )
   }
 }
