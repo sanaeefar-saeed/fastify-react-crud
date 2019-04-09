@@ -9,7 +9,6 @@ export default class EditCategory extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.match.params._id);
     axios
       .get("http://localhost:4000/api/categories/" + this.props.match.params.id)
       .then(response => {

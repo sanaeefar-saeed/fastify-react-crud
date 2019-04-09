@@ -1,41 +1,47 @@
 import React, {Component} from "react";
 import axios from "axios";
+import {connect} from "react-redux";
+import {changeCategoryName, changeParentId, createCategoryError} from "../../actions/categoryActions";
 
-export default class CreateCategory extends Component {
-  state = {
-    categoryName: "",
-    parentId: "",
-    createCategoryError: false
-  };
+class CreateCategory extends Component {
+  // state = {
+  //   categoryName: "",
+  //   parentId: "",
+  //   createCategoryError: false
+  // };
 
   onChangeCategoryName = e => {
-    this.setState({categoryName: e.target.value})
+    // this.setState({categoryName: e.target.value})
+    this.props.dispatch(changeCategoryName(e.target.value))
   };
 
   onChangeParentId = e => {
-    this.setState({parentId: e.target.value})
+    // this.setState({parentId: e.target.value})
+    this.props.dispatch(changeParentId(e.target.value))
   };
 
   onSubmit = e => {
     e.preventDefault();
     const newCategory = {
-      categoryName: this.state.categoryName,
-      parentId: this.state.parentId
+      categoryName: this.props.categoryName,
+      parentId: this.props.parentId
     };
     axios
       .post("http://localhost:4000/api/categories", newCategory)
       .then(res => console.log(res.data))
-      .catch(err => this.setState({createCategoryError: err}));
+      // .catch(err => this.setState({createCategoryError: err}))
+      .catch(err => this.props.dispatch(createCategoryError(err)));
 
-    this.setState({
-      categoryName: "",
-      parentId: ""
-    });
+    // this.setState({
+    //   categoryName: "",
+    //   parentId: ""
+    // });
+    this.props.dispatch(changeCategoryName(''));
+    this.props.dispatch(changeParentId(''))
   };
 
   submitValidation = () => {
-    return Boolean(this.state.categoryName) && Boolean(this.state.parentId);
-
+    return Boolean(this.props.categoryName) && Boolean(this.props.parentId);
   };
 
   render() {
@@ -48,7 +54,7 @@ export default class CreateCategory extends Component {
             <input
               type="text"
               className="form-control"
-              value={this.state.categoryName}
+              value={this.props.categoryName}
               onChange={this.onChangeCategoryName}
             />
           </div>
@@ -57,7 +63,7 @@ export default class CreateCategory extends Component {
             <input
               type="text"
               className="form-control"
-              value={this.state.parentId}
+              value={this.props.parentId}
               onChange={this.onChangeParentId}
             />
           </div>
@@ -75,3 +81,13 @@ export default class CreateCategory extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  const categoryName = state.categoryReducer.categoryName;
+  const parentId = state.categoryReducer.parentId;
+  const createCategoryError = state.categoryReducer.createCategoryError;
+
+  return {categoryName, parentId, createCategoryError}
+};
+
+export default connect(mapStateToProps)(CreateCategory)
