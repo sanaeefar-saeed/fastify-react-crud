@@ -32,8 +32,6 @@ class CreateCategory extends Component {
       .then(res => console.log(res.data))
       .then(this.clearInputs)
       .catch(err => this.props.dispatch(createCategoryError(err)));
-
-    // this.clearInputs();
   };
 
   submitValidation = () => {

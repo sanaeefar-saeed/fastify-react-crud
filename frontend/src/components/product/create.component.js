@@ -31,9 +31,8 @@ class CreateProduct extends Component {
       .post("http://localhost:4000/api/products", newProduct)
       // todo remove this console log
       .then(res => console.log(res.data))
+      .then(this.clearInputs)
       .catch(err => this.props.dispatch(createProductError(err)));
-
-    this.clearInputs();
   };
 
   submitValidation = () => {
