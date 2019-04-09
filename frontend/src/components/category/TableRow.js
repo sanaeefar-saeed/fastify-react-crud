@@ -7,6 +7,7 @@ const TableRow = props => {
     props.onDelete(props.category._id)
   };
 
+  /** @namespace props.category */
   return (
     <tr>
       <td>{props.category.parentId}</td>

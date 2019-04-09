@@ -30,9 +30,9 @@ export default class CategoryIndex extends Component {
 
   // @novonimo
   // for re-render after submit edit !
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    this.fetchData()
-  }
+  // componentDidUpdate(prevProps, prevState, snapshot) {
+  //   this.fetchData()
+  // }
 
   handleDelete = id => {
     const categories = this.state.categories.filter(category => category._id !== id);

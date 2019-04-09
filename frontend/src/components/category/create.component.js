@@ -33,6 +33,11 @@ export default class CreateCategory extends Component {
     });
   };
 
+  submitValidation = () => {
+    return Boolean(this.state.categoryName) && Boolean(this.state.parentId);
+
+  };
+
   render() {
     return (
       <div style={{marginTop: 10}}>
@@ -57,11 +62,13 @@ export default class CreateCategory extends Component {
             />
           </div>
           <div className="form-group">
-            <input
+            <button
               type="submit"
-              value="Save Category"
               className="btn btn-primary"
-            />
+              disabled={!this.submitValidation()}
+            >
+              Save Category
+            </button>
           </div>
         </form>
       </div>

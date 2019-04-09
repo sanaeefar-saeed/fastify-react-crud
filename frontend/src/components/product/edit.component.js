@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import axios from "axios";
 
 export default class EditProduct extends Component {
@@ -20,12 +20,12 @@ export default class EditProduct extends Component {
           productId: response.data.productId
         });
       })
-      .catch(err => this.setState({ fetchProductError: err }));
+      .catch(err => this.setState({fetchProductError: err}));
   }
 
-  onChangeProductName = e => this.setState({ productName: e.target.value });
+  onChangeProductName = e => this.setState({productName: e.target.value});
 
-  onChangeProductId = e => this.setState({ productId: e.target.value });
+  onChangeProductId = e => this.setState({productId: e.target.value});
 
   onSubmit = e => {
     e.preventDefault();
@@ -40,15 +40,20 @@ export default class EditProduct extends Component {
       )
       // todo: remove console log for promise object !
       .then(res => console.log(res.data))
-      .catch(err => this.setState({ submitEditedProductError: err }));
+      .catch(err => this.setState({submitEditedProductError: err}));
 
-    this.props.history.push("/productIndex");
+    this.props.history.push("/product/index");
   };
+
+  submitValidation = () => {
+    return Boolean(this.state.productId) && Boolean(this.state.productName);
+  };
+
 
   render() {
     return (
-      <div style={{ marginTop: 10 }}>
-        <h3 align="center">Update Category</h3>
+      <div style={{marginTop: 10}}>
+        <h3 align="center">Update Product</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label>Product Name: </label>
@@ -69,11 +74,13 @@ export default class EditProduct extends Component {
             />
           </div>
           <div className="form-group">
-            <input
+            <button
               type="submit"
-              value="Update Category"
               className="btn btn-primary"
-            />
+              disabled={!this.submitValidation()}
+            >
+              Update Product
+            </button>
           </div>
         </form>
       </div>

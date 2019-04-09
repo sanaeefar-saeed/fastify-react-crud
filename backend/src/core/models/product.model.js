@@ -1,8 +1,8 @@
-// External Dependancies
+// External Dependencies
 const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
-  ProductId: Number,
+  productId: Number,
   productName: String,
   brand: String,
   price: String,

@@ -37,6 +37,11 @@ export default class EditCategory extends Component {
       .then(res => console.log(res.data));
 
     this.props.history.push("/category/index");
+    // this.props.history.goBack();
+  };
+
+  submitValidation = () => {
+    return Boolean(this.state.categoryName) && Boolean(this.state.parentId);
   };
 
   render() {
@@ -63,11 +68,13 @@ export default class EditCategory extends Component {
             />
           </div>
           <div className="form-group">
-            <input
+            <button
               type="submit"
-              value="Update Category"
               className="btn btn-primary"
-            />
+              disabled={!this.submitValidation()}
+            >
+              Update Category
+            </button>
           </div>
         </form>
       </div>
