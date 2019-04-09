@@ -1,46 +1,33 @@
 import React, {Component} from "react";
 import axios from "axios";
 import TableRow from "./TableRow";
+import {connect} from 'react-redux'
+import {
+  getCategories,
+  isFetchingCategory,
+  fetchCategoryError,
+  deleteCategoryError
+} from "../../actions/categoryActions";
 
-export default class CategoryIndex extends Component {
-  state = {
-    categories: [],
-    isFetchingData: true,
-    fetchCategoryError: false,
-    deleteCategoryError: false
-  };
+class CategoryIndex extends Component {
 
-  fetchData = () => {
+  componentDidMount() {
     axios
       .get("http://localhost:4000/api/categories")
       .then(response => {
-        this.setState({
-          categories: response.data,
-          isFetchingData: false
-        });
+        this.props.dispatch(getCategories(response.data));
+        this.props.dispatch(isFetchingCategory(false))
       })
-      .catch(err => {
-        this.setState({fetchCategoryError: err});
-      })
-  };
-
-  componentDidMount() {
-    this.fetchData()
+      .catch(err => this.props.dispatch(fetchCategoryError(err)))
   }
 
-  // @novonimo
-  // for re-render after submit edit !
-  // componentDidUpdate(prevProps, prevState, snapshot) {
-  //   this.fetchData()
-  // }
-
   handleDelete = id => {
-    const categories = this.state.categories.filter(category => category._id !== id);
+    const categories = this.props.categories.filter(category => category._id !== id);
     axios
       .delete("http://localhost:4000/api/categories/" + id)
-      .catch(err=>this.setState({deleteCategoryError: err}));
+      .catch(err => this.props.dispatch(deleteCategoryError(err)));
 
-    this.setState({categories})
+    this.props.dispatch(getCategories(categories))
   };
 
   render() {
@@ -55,7 +42,7 @@ export default class CategoryIndex extends Component {
           </tr>
           </thead>
           <tbody>
-          {this.state.categories.map(category => {
+          {this.props.categories.map(category => {
             return <TableRow
               category={category}
               key={category._id}
@@ -68,3 +55,11 @@ export default class CategoryIndex extends Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  const categories = state.categoryReducer.categories;
+
+  return {categories}
+};
+
+export default connect(mapStateToProps)(CategoryIndex)

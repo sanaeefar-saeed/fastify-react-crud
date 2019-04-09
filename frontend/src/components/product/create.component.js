@@ -1,37 +1,43 @@
 import React, {Component} from "react";
 import axios from "axios";
+import {connect} from "react-redux";
+import {
+  changeProductName,
+  changeProductId,
+  createProductError,
+} from "../../actions/productActions";
 
-export default class CreateProduct extends Component {
-  state = {
-    productName: "",
-    productId: "",
-    createProductError: false
+class CreateProduct extends Component {
+  clearInputs = () => {
+    this.props.dispatch(changeProductName(""));
+    this.props.dispatch(changeProductId(""))
   };
 
-  onChangeProductName = e => this.setState({productName: e.target.value});
+  componentDidMount() {
+    this.clearInputs();
+  }
 
-  onChangeProductId = e => this.setState({productId: e.target.value});
+  onChangeProductName = e => this.props.dispatch(changeProductName(e.target.value));
+
+  onChangeProductId = e => this.props.dispatch(changeProductId(e.target.value));
 
   onSubmit = e => {
     e.preventDefault();
     const newProduct = {
-      productId: this.state.productId,
-      productName: this.state.productName
+      productId: this.props.productId,
+      productName: this.props.productName
     };
     axios
       .post("http://localhost:4000/api/products", newProduct)
       // todo remove this console log
       .then(res => console.log(res.data))
-      .catch(err => this.setState({createProductError: err}));
+      .catch(err => this.props.dispatch(createProductError(err)));
 
-    this.setState({
-      productName: "",
-      productId: ""
-    });
+    this.clearInputs();
   };
 
-  submitValidation = ()=> {
-    return Boolean(this.state.productId) && Boolean(this.state.productName);
+  submitValidation = () => {
+    return Boolean(this.props.productId) && Boolean(this.props.productName);
 
   };
 
@@ -39,13 +45,13 @@ export default class CreateProduct extends Component {
     return (
       <div style={{marginTop: 10}}>
         <h3>Add New Product</h3>
-        <form onSubmit={this.onSubmit} >
+        <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label>Product Name: </label>
             <input
               type="text"
               className="form-control"
-              value={this.state.productName}
+              value={this.props.productName}
               onChange={this.onChangeProductName}
             />
           </div>
@@ -54,7 +60,7 @@ export default class CreateProduct extends Component {
             <input
               type="text"
               className="form-control"
-              value={this.state.productId}
+              value={this.props.productId}
               onChange={this.onChangeProductId}
             />
           </div>
@@ -73,3 +79,12 @@ export default class CreateProduct extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  const productName = state.productReducer.productName;
+  const productId = state.productReducer.productId;
+
+  return {productName, productId}
+};
+
+export default connect(mapStateToProps)(CreateProduct)

@@ -1,24 +1,25 @@
 import React, {Component} from "react";
 import axios from "axios";
 import {connect} from "react-redux";
-import {changeCategoryName, changeParentId, createCategoryError} from "../../actions/categoryActions";
+import {
+  changeCategoryName,
+  changeParentId,
+  createCategoryError
+} from "../../actions/categoryActions";
 
 class CreateCategory extends Component {
-  // state = {
-  //   categoryName: "",
-  //   parentId: "",
-  //   createCategoryError: false
-  // };
-
-  onChangeCategoryName = e => {
-    // this.setState({categoryName: e.target.value})
-    this.props.dispatch(changeCategoryName(e.target.value))
+  clearInputs = () => {
+    this.props.dispatch(changeCategoryName(''));
+    this.props.dispatch(changeParentId(''))
   };
 
-  onChangeParentId = e => {
-    // this.setState({parentId: e.target.value})
-    this.props.dispatch(changeParentId(e.target.value))
-  };
+  componentDidMount() {
+    this.clearInputs();
+  }
+
+  onChangeCategoryName = e => this.props.dispatch(changeCategoryName(e.target.value));
+
+  onChangeParentId = e => this.props.dispatch(changeParentId(e.target.value));
 
   onSubmit = e => {
     e.preventDefault();
@@ -29,15 +30,10 @@ class CreateCategory extends Component {
     axios
       .post("http://localhost:4000/api/categories", newCategory)
       .then(res => console.log(res.data))
-      // .catch(err => this.setState({createCategoryError: err}))
+      .then(this.clearInputs)
       .catch(err => this.props.dispatch(createCategoryError(err)));
 
-    // this.setState({
-    //   categoryName: "",
-    //   parentId: ""
-    // });
-    this.props.dispatch(changeCategoryName(''));
-    this.props.dispatch(changeParentId(''))
+    // this.clearInputs();
   };
 
   submitValidation = () => {
@@ -85,9 +81,8 @@ class CreateCategory extends Component {
 const mapStateToProps = (state) => {
   const categoryName = state.categoryReducer.categoryName;
   const parentId = state.categoryReducer.parentId;
-  const createCategoryError = state.categoryReducer.createCategoryError;
 
-  return {categoryName, parentId, createCategoryError}
+  return {categoryName, parentId}
 };
 
 export default connect(mapStateToProps)(CreateCategory)

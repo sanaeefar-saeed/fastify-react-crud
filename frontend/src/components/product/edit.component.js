@@ -1,37 +1,34 @@
 import React, {Component} from "react";
 import axios from "axios";
+import {connect} from "react-redux";
+import {
+  changeProductName,
+  changeProductId,
+  editProductError,
+} from "../../actions/productActions";
 
-export default class EditProduct extends Component {
-  state = {
-    productName: "",
-    productId: "",
-    fetchProductError: false,
-    submitEditedProductError: false
-  };
+
+class EditProduct extends Component {
 
   componentDidMount() {
-    console.log(this.props.match.params._id);
-
     axios
       .get("http://localhost:4000/api/products/" + this.props.match.params.id)
       .then(response => {
-        this.setState({
-          productName: response.data.productName,
-          productId: response.data.productId
-        });
+        this.props.dispatch(changeProductName(response.data.productName));
+        this.props.dispatch(changeProductId(response.data.productId))
       })
-      .catch(err => this.setState({fetchProductError: err}));
+      .catch(err => console.log(err));
   }
 
-  onChangeProductName = e => this.setState({productName: e.target.value});
+  onChangeProductName = e => this.props.dispatch(changeProductName(e.target.value));
 
-  onChangeProductId = e => this.setState({productId: e.target.value});
+  onChangeProductId = e => this.props.dispatch(changeProductId(e.target.value));
 
   onSubmit = e => {
     e.preventDefault();
     const editedProduct = {
-      productName: this.state.productName,
-      productId: this.state.productId
+      productName: this.props.productName,
+      productId: this.props.productId
     };
     axios
       .put(
@@ -40,13 +37,13 @@ export default class EditProduct extends Component {
       )
       // todo: remove console log for promise object !
       .then(res => console.log(res.data))
-      .catch(err => this.setState({submitEditedProductError: err}));
+      .catch(err => this.props.dispatch(editProductError(err)));
 
     this.props.history.push("/product/index");
   };
 
   submitValidation = () => {
-    return Boolean(this.state.productId) && Boolean(this.state.productName);
+    return Boolean(this.props.productId) && Boolean(this.props.productName);
   };
 
 
@@ -60,7 +57,7 @@ export default class EditProduct extends Component {
             <input
               type="text"
               className="form-control"
-              value={this.state.productName}
+              value={this.props.productName}
               onChange={this.onChangeProductName}
             />
           </div>
@@ -69,7 +66,7 @@ export default class EditProduct extends Component {
             <input
               type="text"
               className="form-control"
-              value={this.state.productId}
+              value={this.props.productId}
               onChange={this.onChangeProductId}
             />
           </div>
@@ -87,3 +84,12 @@ export default class EditProduct extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  const productName = state.productReducer.productName;
+  const productId = state.productReducer.productId;
+
+  return {productName, productId}
+};
+
+export default connect(mapStateToProps)(EditProduct)

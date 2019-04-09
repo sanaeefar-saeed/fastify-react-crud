@@ -1,46 +1,35 @@
 import React, {Component} from "react";
 import axios from "axios";
 import TableRow from "./TableRow";
+import {connect} from 'react-redux'
+import {
+  getProducts,
+  isFetchingProduct,
+  fetchProductError,
+  deleteProductError
+} from "../../actions/productActions";
 
-export default class ProductIndex extends Component {
-  state = {
-    products: [],
-    isFetchingData: true,
-    fetchProductError: false,
-    deleteProductError: false
-  };
+class ProductIndex extends Component {
 
-  fetchData = () => {
+  componentDidMount() {
     axios
       .get("http://localhost:4000/api/products")
       .then(response => {
-        this.setState({
-          products: response.data,
-          isFetchingData: false
-        });
+        this.props.dispatch(getProducts(response.data));
+        this.props.dispatch(isFetchingProduct(false))
       })
       .catch(err => {
-        this.setState({fetchProductError: err});
+        this.props.dispatch(fetchProductError(err))
       });
-  };
-
-  componentDidMount() {
-    this.fetchData();
   }
 
-  // @novonimo
-  // for re-render after submit edit !
-  // componentDidUpdate(prevProps, prevState, snapshot) {
-  // this.fetchData();
-  // }
-
   handleDelete = id => {
-    const products = this.state.products.filter(product => product._id !== id);
+    const products = this.props.products.filter(product => product._id !== id);
     axios
       .delete("http://localhost:4000/api/products/" + id)
-      .catch(err => this.setState({deleteProductError: err}));
+      .catch(err => this.props.dispatch(deleteProductError(err)));
 
-    this.setState({products});
+    this.props.dispatch(getProducts(products));
   };
 
   render() {
@@ -55,7 +44,7 @@ export default class ProductIndex extends Component {
           </tr>
           </thead>
           <tbody>
-          {this.state.products.map(product => {
+          {this.props.products.map(product => {
             return (
               <TableRow
                 product={product}
@@ -70,3 +59,11 @@ export default class ProductIndex extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  const products = state.productReducer.products;
+
+  return {products}
+};
+
+export default connect(mapStateToProps)(ProductIndex)
