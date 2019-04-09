@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import axios from "axios";
 
 export default class CreateProduct extends Component {
@@ -8,9 +8,9 @@ export default class CreateProduct extends Component {
     createProductError: false
   };
 
-  onChangeProductName = e => this.setState({productName: e.target.value});
+  onChangeProductName = e => this.setState({ productName: e.target.value });
 
-  onChangeProductId = e => this.setState({productId: e.target.value});
+  onChangeProductId = e => this.setState({ productId: e.target.value });
 
   onSubmit = e => {
     e.preventDefault();
@@ -21,7 +21,7 @@ export default class CreateProduct extends Component {
     axios
       .post("http://localhost:4000/api/products", newProduct)
       .then(res => console.log(res.data))
-      .catch(err => this.setState({createProductError: err}));
+      .catch(err => this.setState({ createProductError: err }));
 
     this.setState({
       productName: "",
@@ -31,8 +31,8 @@ export default class CreateProduct extends Component {
 
   render() {
     return (
-      <div style={{marginTop: 10}}>
-        <h3>Add New Category</h3>
+      <div style={{ marginTop: 10 }}>
+        <h3>Add New Product</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label>Product Name: </label>
@@ -55,7 +55,7 @@ export default class CreateProduct extends Component {
           <div className="form-group">
             <input
               type="submit"
-              value="Register Category"
+              value="Save Product"
               className="btn btn-primary"
             />
           </div>

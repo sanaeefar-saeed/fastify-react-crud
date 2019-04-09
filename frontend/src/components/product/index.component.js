@@ -1,10 +1,10 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import axios from "axios";
 import TableRow from "./TableRow";
 
 export default class CategoryIndex extends Component {
   state = {
-    products: [] || '',
+    products: [] || "",
     isFetchingData: true,
     fetchProductError: false,
     deleteProductError: false
@@ -20,51 +20,53 @@ export default class CategoryIndex extends Component {
         });
       })
       .catch(err => {
-        this.setState({fetchProductError: err});
-      })
+        this.setState({ fetchProductError: err });
+      });
   };
 
   componentDidMount() {
-    this.fetchData()
+    this.fetchData();
   }
 
   // @novonimo
   // for re-render after submit edit !
   componentDidUpdate(prevProps, prevState, snapshot) {
-    this.fetchData()
+    this.fetchData();
   }
 
   handleDelete = id => {
     const products = this.state.products.filter(product => product._id !== id);
     axios
       .delete("http://localhost:4000/api/products/" + id)
-      .catch(err => this.setState({deleteProductError: err}));
+      .catch(err => this.setState({ deleteProductError: err }));
 
-    this.setState({products})
+    this.setState({ products });
   };
 
   render() {
     return (
       <div>
         <h3 align="center">Product List</h3>
-        <table className="table table-striped" style={{marginTop: 20}}>
+        <table className="table table-striped" style={{ marginTop: 20 }}>
           <thead>
-          <tr>
-            <th>ID</th>
-            <th>Product Name</th>
-          </tr>
+            <tr>
+              <th>ID</th>
+              <th>Product Name</th>
+            </tr>
           </thead>
           <tbody>
-          {this.state.products.map(product => {
-            return <TableRow
-              product={product}
-              key={product._id}
-              onDelete={this.handleDelete}
-            />
-          })}
+            {this.state.products.map(product => {
+              return (
+                <TableRow
+                  product={product}
+                  key={product._id}
+                  onDelete={this.handleDelete}
+                />
+              );
+            })}
           </tbody>
         </table>
       </div>
-    )
+    );
   }
 }

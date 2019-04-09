@@ -59,7 +59,7 @@ export default class CreateCategory extends Component {
           <div className="form-group">
             <input
               type="submit"
-              value="Register Category"
+              value="Save Category"
               className="btn btn-primary"
             />
           </div>
