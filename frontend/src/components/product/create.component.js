@@ -15,8 +15,8 @@ export default class CreateProduct extends Component {
   onSubmit = e => {
     e.preventDefault();
     const newProduct = {
-      productName: this.state.productName,
-      productId: this.state.productId
+      productId: this.state.productId,
+      productName: this.state.productName
     };
     axios
       .post("http://localhost:4000/api/products", newProduct)

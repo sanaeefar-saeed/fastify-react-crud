@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import TableRow from "./TableRow";
 
-export default class CategoryIndex extends Component {
+export default class ProductIndex extends Component {
   state = {
     products: [] || "",
     isFetchingData: true,
@@ -50,7 +50,7 @@ export default class CategoryIndex extends Component {
         <table className="table table-striped" style={{ marginTop: 20 }}>
           <thead>
             <tr>
-              <th>ID</th>
+              <th>Product ID</th>
               <th>Product Name</th>
             </tr>
           </thead>

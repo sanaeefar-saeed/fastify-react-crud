@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import axios from "axios";
 
 export default class EditProduct extends Component {
@@ -6,10 +6,12 @@ export default class EditProduct extends Component {
     productName: "",
     productId: "",
     fetchProductError: false,
-    submitEditedProductError: false,
+    submitEditedProductError: false
   };
 
   componentDidMount() {
+    console.log(this.props.match.params._id);
+
     axios
       .get("http://localhost:4000/api/products/" + this.props.match.params.id)
       .then(response => {
@@ -18,12 +20,12 @@ export default class EditProduct extends Component {
           productId: response.data.productId
         });
       })
-      .catch(err => this.setState({fetchProductError: err}))
+      .catch(err => this.setState({ fetchProductError: err }));
   }
 
-  onChangeProductName = e => this.setState({productName: e.target.value});
+  onChangeProductName = e => this.setState({ productName: e.target.value });
 
-  onChangeParentId = e => this.setState({productId: e.target.value});
+  onChangeProductId = e => this.setState({ productId: e.target.value });
 
   onSubmit = e => {
     e.preventDefault();
@@ -32,17 +34,20 @@ export default class EditProduct extends Component {
       productId: this.state.productId
     };
     axios
-      .put("http://localhost:4000/api/products/" + this.props.match.params.id, editedProduct)
+      .put(
+        "http://localhost:4000/api/products/" + this.props.match.params.id,
+        editedProduct
+      )
       // todo: remove console log for promise object !
       .then(res => console.log(res.data))
-      .catch(err => this.setState({submitEditedProductError: err}));
+      .catch(err => this.setState({ submitEditedProductError: err }));
 
     this.props.history.push("/productIndex");
   };
 
   render() {
     return (
-      <div style={{marginTop: 10}}>
+      <div style={{ marginTop: 10 }}>
         <h3 align="center">Update Category</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
@@ -55,12 +60,12 @@ export default class EditProduct extends Component {
             />
           </div>
           <div className="form-group">
-            <label>ParentId: </label>
+            <label>ProductId: </label>
             <input
               type="text"
               className="form-control"
               value={this.state.productId}
-              onChange={this.onChangeParentId}
+              onChange={this.onChangeProductId}
             />
           </div>
           <div className="form-group">
