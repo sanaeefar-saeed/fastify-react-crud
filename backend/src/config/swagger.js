@@ -16,4 +16,4 @@ exports.options = {
     consumes: ['application/json'],
     produces: ['application/json']
   }
-}
+};

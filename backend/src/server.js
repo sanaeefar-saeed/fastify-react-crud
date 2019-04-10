@@ -3,7 +3,7 @@ const fastify = require("fastify")({
   logger: true
 });
 
-// enable CORS for localhost:3000 
+// enable CORS for localhost:3000
 fastify.register(require("fastify-cors"), {origin: true});
 
 // Require external modules
@@ -51,4 +51,5 @@ const start = async () => {
     process.exit(1);
   }
 };
+
 start();
