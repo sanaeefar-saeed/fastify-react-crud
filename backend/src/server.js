@@ -3,9 +3,8 @@ const fastify = require("fastify")({
   logger: true
 });
 
-fastify.register(require("fastify-cors"), {
-  // put your options here
-});
+// enable CORS for localhost:3000 
+fastify.register(require("fastify-cors"), {origin: true});
 
 // Require external modules
 const mongoose = require("mongoose");
@@ -37,7 +36,7 @@ mongoose
   .then(() => console.log("MongoDB connected..."))
   .catch(err => console.log(err));
 
-routes.forEach((route, index) => {
+routes.forEach((route) => {
   fastify.route(route);
 });
 

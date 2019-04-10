@@ -1,4 +1,4 @@
-// External Dependancies
+// External Dependencies
 const boom = require("boom");
 
 // Get Data Models
@@ -7,8 +7,7 @@ const Category = require("../../core/models/category.model");
 // Get all categories
 exports.getCategories = async (req, reply) => {
   try {
-    const Categories = await Category.find();
-    return Categories;
+    return await Category.find();
   } catch (err) {
     throw boom.boomify(err);
   }
@@ -18,8 +17,7 @@ exports.getCategories = async (req, reply) => {
 exports.getSingleCategory = async (req, reply) => {
   try {
     const id = req.params.id;
-    const category = await Category.findById(id);
-    return category;
+    return await Category.findById(id);
   } catch (err) {
     throw boom.boomify(err);
   }
@@ -41,10 +39,9 @@ exports.updateCategory = async (req, reply) => {
     const id = req.params.id;
     const category = req.body;
     const { ...updateData } = category;
-    const update = await Category.findByIdAndUpdate(id, updateData, {
+    return await Category.findByIdAndUpdate(id, updateData, {
       new: true
     });
-    return update;
   } catch (err) {
     throw boom.boomify(err);
   }
@@ -54,8 +51,7 @@ exports.updateCategory = async (req, reply) => {
 exports.deleteCategory = async (req, reply) => {
   try {
     const id = req.params.id;
-    const category = await Category.findByIdAndRemove(id);
-    return category;
+    return await Category.findByIdAndRemove(id);
   } catch (err) {
     throw boom.boomify(err);
   }

@@ -30,8 +30,9 @@ class CreateCategory extends Component {
     axios
       .post("http://localhost:4000/api/categories", newCategory)
       .then(res => console.log(res.data))
-      .then(this.clearInputs)
       .catch(err => this.props.dispatch(createCategoryError(err)));
+
+    this.clearInputs()
   };
 
   submitValidation = () => {

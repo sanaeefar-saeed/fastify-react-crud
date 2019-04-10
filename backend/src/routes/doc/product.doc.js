@@ -7,17 +7,17 @@ exports.getProductsSchema = {
       description: 'Successful response',
       type: 'object',
       properties: {
-        _id: { type: 'string' },
-        title: { type: 'string' },
-        brand: { type: 'string' },
-        price: { type: 'string' },
-        age: { type: 'number' },
-        services: { type: 'object' },
-        __v: { type: 'number' }
+        _id: {type: 'string'},
+        title: {type: 'string'},
+        brand: {type: 'string'},
+        price: {type: 'string'},
+        age: {type: 'number'},
+        services: {type: 'object'},
+        __v: {type: 'number'}
       }
     }
   }
-}
+};
 
 
 exports.getSingleProductsSchema = {
@@ -29,17 +29,17 @@ exports.getSingleProductsSchema = {
       description: 'Successful response',
       type: 'object',
       properties: {
-        _id: { type: 'string' },
-        title: { type: 'string' },
-        brand: { type: 'string' },
-        price: { type: 'string' },
-        age: { type: 'number' },
-        services: { type: 'object' },
-        __v: { type: 'number' }
+        _id: {type: 'string'},
+        title: {type: 'string'},
+        brand: {type: 'string'},
+        price: {type: 'string'},
+        age: {type: 'number'},
+        services: {type: 'object'},
+        __v: {type: 'number'}
       }
     }
   }
-}
+};
 
 
 exports.addProductSchema = {
@@ -49,11 +49,11 @@ exports.addProductSchema = {
   body: {
     type: 'object',
     properties: {
-      title: { type: 'string' },
-      brand: { type: 'string' },
-      price: { type: 'string' },
-      age: { type: 'number' },
-      services: { type: 'object' }
+      title: {type: 'string'},
+      brand: {type: 'string'},
+      price: {type: 'string'},
+      age: {type: 'number'},
+      services: {type: 'object'}
     }
   },
   response: {
@@ -61,17 +61,17 @@ exports.addProductSchema = {
       description: 'Successful response',
       type: 'object',
       properties: {
-        _id: { type: 'string' },
-        title: { type: 'string' },
-        brand: { type: 'string' },
-        price: { type: 'string' },
-        age: { type: 'number' },
-        services: { type: 'object' },
-        __v: { type: 'number' }
+        _id: {type: 'string'},
+        title: {type: 'string'},
+        brand: {type: 'string'},
+        price: {type: 'string'},
+        age: {type: 'number'},
+        services: {type: 'object'},
+        __v: {type: 'number'}
       }
     }
   }
-}
+};
 
 
 exports.updateProductSchema = {
@@ -81,11 +81,11 @@ exports.updateProductSchema = {
   body: {
     type: 'object',
     properties: {
-      title: { type: 'string' },
-      brand: { type: 'string' },
-      price: { type: 'string' },
-      age: { type: 'number' },
-      services: { type: 'object' }
+      title: {type: 'string'},
+      brand: {type: 'string'},
+      price: {type: 'string'},
+      age: {type: 'number'},
+      services: {type: 'object'}
     }
   },
   response: {
@@ -93,17 +93,17 @@ exports.updateProductSchema = {
       description: 'Successful response',
       type: 'object',
       properties: {
-        _id: { type: 'string' },
-        title: { type: 'string' },
-        brand: { type: 'string' },
-        price: { type: 'string' },
-        age: { type: 'number' },
-        services: { type: 'object' },
-        __v: { type: 'number' }
+        _id: {type: 'string'},
+        title: {type: 'string'},
+        brand: {type: 'string'},
+        price: {type: 'string'},
+        age: {type: 'number'},
+        services: {type: 'object'},
+        __v: {type: 'number'}
       }
     }
   }
-}
+};
 
 
 exports.deleteProductSchema = {
@@ -113,11 +113,11 @@ exports.deleteProductSchema = {
   body: {
     type: 'object',
     properties: {
-      title: { type: 'string' },
-      brand: { type: 'string' },
-      price: { type: 'string' },
-      age: { type: 'number' },
-      services: { type: 'object' }
+      title: {type: 'string'},
+      brand: {type: 'string'},
+      price: {type: 'string'},
+      age: {type: 'number'},
+      services: {type: 'object'}
     }
   },
   response: {
@@ -125,15 +125,15 @@ exports.deleteProductSchema = {
       description: 'Successful response',
       type: 'object',
       properties: {
-        _id: { type: 'string' },
-        title: { type: 'string' },
-        brand: { type: 'string' },
-        price: { type: 'string' },
-        age: { type: 'number' },
-        services: { type: 'object' },
-        __v: { type: 'number' }
+        _id: {type: 'string'},
+        title: {type: 'string'},
+        brand: {type: 'string'},
+        price: {type: 'string'},
+        age: {type: 'number'},
+        services: {type: 'object'},
+        __v: {type: 'number'}
       }
     }
   }
-}
+};
 

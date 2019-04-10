@@ -4,7 +4,7 @@ import {
   FETCH_PRODUCT_ERROR,
   DELETE_PRODUCT_ERROR,
   CHANGE_PRODUCT_NAME,
-  CHANGE_PARENT_ID,
+  CHANGE_PRODUCT_ID,
   CREATE_PRODUCT_ERROR,
   EDIT_PRODUCT_ERROR
 } from "../actions/productActions";
@@ -12,8 +12,8 @@ import {
 const initialState = {
   products: [],
   isFetchingProduct: true,
-  productName: "",
-  productId: "",
+  productName: '',
+  productId: '',
   errors: [{
     createProductError: false,
     editProductError: false,
@@ -55,7 +55,7 @@ const productReducer = (state = initialState, action) => {
         ...state,
         productName: action.productName
       };
-    case(CHANGE_PARENT_ID):
+    case(CHANGE_PRODUCT_ID):
       return {
         ...state,
         productId: action.productId

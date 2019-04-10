@@ -7,17 +7,17 @@ exports.getCategoriesSchema = {
       description: 'Successful response',
       type: 'object',
       properties: {
-        _id: { type: 'string' },
-        title: { type: 'string' },
-        brand: { type: 'string' },
-        price: { type: 'string' },
-        age: { type: 'number' },
-        services: { type: 'object' },
-        __v: { type: 'number' }
+        _id: {type: 'string'},
+        title: {type: 'string'},
+        brand: {type: 'string'},
+        price: {type: 'string'},
+        age: {type: 'number'},
+        services: {type: 'object'},
+        __v: {type: 'number'}
       }
     }
   }
-}
+};
 
 
 exports.getSingleCategoriesSchema = {
@@ -29,17 +29,17 @@ exports.getSingleCategoriesSchema = {
       description: 'Successful response',
       type: 'object',
       properties: {
-        _id: { type: 'string' },
-        title: { type: 'string' },
-        brand: { type: 'string' },
-        price: { type: 'string' },
-        age: { type: 'number' },
-        services: { type: 'object' },
-        __v: { type: 'number' }
+        _id: {type: 'string'},
+        title: {type: 'string'},
+        brand: {type: 'string'},
+        price: {type: 'string'},
+        age: {type: 'number'},
+        services: {type: 'object'},
+        __v: {type: 'number'}
       }
     }
   }
-}
+};
 
 
 exports.addCategorySchema = {
@@ -49,11 +49,11 @@ exports.addCategorySchema = {
   body: {
     type: 'object',
     properties: {
-      title: { type: 'string' },
-      brand: { type: 'string' },
-      price: { type: 'string' },
-      age: { type: 'number' },
-      services: { type: 'object' }
+      title: {type: 'string'},
+      brand: {type: 'string'},
+      price: {type: 'string'},
+      age: {type: 'number'},
+      services: {type: 'object'}
     }
   },
   response: {
@@ -61,17 +61,17 @@ exports.addCategorySchema = {
       description: 'Successful response',
       type: 'object',
       properties: {
-        _id: { type: 'string' },
-        title: { type: 'string' },
-        brand: { type: 'string' },
-        price: { type: 'string' },
-        age: { type: 'number' },
-        services: { type: 'object' },
-        __v: { type: 'number' }
+        _id: {type: 'string'},
+        title: {type: 'string'},
+        brand: {type: 'string'},
+        price: {type: 'string'},
+        age: {type: 'number'},
+        services: {type: 'object'},
+        __v: {type: 'number'}
       }
     }
   }
-}
+};
 
 
 exports.updateCategorySchema = {
@@ -81,11 +81,11 @@ exports.updateCategorySchema = {
   body: {
     type: 'object',
     properties: {
-      title: { type: 'string' },
-      brand: { type: 'string' },
-      price: { type: 'string' },
-      age: { type: 'number' },
-      services: { type: 'object' }
+      title: {type: 'string'},
+      brand: {type: 'string'},
+      price: {type: 'string'},
+      age: {type: 'number'},
+      services: {type: 'object'}
     }
   },
   response: {
@@ -93,17 +93,17 @@ exports.updateCategorySchema = {
       description: 'Successful response',
       type: 'object',
       properties: {
-        _id: { type: 'string' },
-        title: { type: 'string' },
-        brand: { type: 'string' },
-        price: { type: 'string' },
-        age: { type: 'number' },
-        services: { type: 'object' },
-        __v: { type: 'number' }
+        _id: {type: 'string'},
+        title: {type: 'string'},
+        brand: {type: 'string'},
+        price: {type: 'string'},
+        age: {type: 'number'},
+        services: {type: 'object'},
+        __v: {type: 'number'}
       }
     }
   }
-}
+};
 
 
 exports.deleteCategorySchema = {
@@ -113,11 +113,11 @@ exports.deleteCategorySchema = {
   body: {
     type: 'object',
     properties: {
-      title: { type: 'string' },
-      brand: { type: 'string' },
-      price: { type: 'string' },
-      age: { type: 'number' },
-      services: { type: 'object' }
+      title: {type: 'string'},
+      brand: {type: 'string'},
+      price: {type: 'string'},
+      age: {type: 'number'},
+      services: {type: 'object'}
     }
   },
   response: {
@@ -125,15 +125,15 @@ exports.deleteCategorySchema = {
       description: 'Successful response',
       type: 'object',
       properties: {
-        _id: { type: 'string' },
-        title: { type: 'string' },
-        brand: { type: 'string' },
-        price: { type: 'string' },
-        age: { type: 'number' },
-        services: { type: 'object' },
-        __v: { type: 'number' }
+        _id: {type: 'string'},
+        title: {type: 'string'},
+        brand: {type: 'string'},
+        price: {type: 'string'},
+        age: {type: 'number'},
+        services: {type: 'object'},
+        __v: {type: 'number'}
       }
     }
   }
-}
+};
 

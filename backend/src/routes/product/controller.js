@@ -7,8 +7,7 @@ const Product = require('../../core/models/product.model');
 // Get all products
 exports.getProducts = async (req, reply) => {
   try {
-    const products = await Product.find();
-    return products
+    return await Product.find()
   } catch (err) {
     throw boom.boomify(err)
   }
@@ -17,9 +16,8 @@ exports.getProducts = async (req, reply) => {
 // Get single product by ID
 exports.getSingleProduct = async (req, reply) => {
   try {
-    const id = req.params.id
-    const product = await Product.findById(id);
-    return product
+    const id = req.params.id;
+    return await Product.findById(id)
   } catch (err) {
     throw boom.boomify(err)
   }
@@ -41,8 +39,7 @@ exports.updateProduct = async (req, reply) => {
     const id = req.params.id;
     const product = req.body;
     const {...updateData} = product;
-    const update = await Product.findByIdAndUpdate(id, updateData, {new: true});
-    return update
+    return await Product.findByIdAndUpdate(id, updateData, {new: true})
   } catch (err) {
     throw boom.boomify(err)
   }
@@ -52,8 +49,7 @@ exports.updateProduct = async (req, reply) => {
 exports.deleteProduct = async (req, reply) => {
   try {
     const id = req.params.id;
-    const product = await Product.findByIdAndRemove(id);
-    return product
+    return await Product.findByIdAndRemove(id)
   } catch (err) {
     throw boom.boomify(err)
   }
