@@ -4,7 +4,8 @@ const fastify = require("fastify")({
 });
 
 // enable CORS for localhost:3000
-fastify.register(require("fastify-cors"), {origin: true});
+// fastify.register(require("fastify-cors"), { origin: true });
+fastify.register(require("fastify-cors"));
 
 // Require external modules
 const mongoose = require("mongoose");
@@ -12,17 +13,17 @@ const mongoose = require("mongoose");
 // Import Routes
 const routes = require("./routes");
 
-fastify.register(require("fastify-jwt"), {
-  secret: "supersecret"
-});
+// fastify.register(require("fastify-jwt"), {
+//   secret: "supersecret"
+// });
 
-fastify.addHook("onRequest", async (request, reply, done) => {
-  try {
-    await request.jwtVerify();
-  } catch (err) {
-    done();
-  }
-});
+// fastify.addHook("onRequest", async (request, reply, done) => {
+//   try {
+//     await request.jwtVerify();
+//   } catch (err) {
+//     done();
+//   }
+// });
 
 // Import Swagger Options
 const swagger = require("./config/swagger");
@@ -36,7 +37,7 @@ mongoose
   .then(() => console.log("MongoDB connected..."))
   .catch(err => console.log(err));
 
-routes.forEach((route) => {
+routes.forEach(route => {
   fastify.route(route);
 });
 
