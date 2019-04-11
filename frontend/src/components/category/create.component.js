@@ -3,7 +3,6 @@ import axios from "axios";
 import { connect } from "react-redux";
 import {
   changeCategoryName,
-  changeParentId,
   changeImage,
   changeIsActive,
   createCategoryError
@@ -12,7 +11,6 @@ import {
 class CreateCategory extends Component {
   clearInputs = () => {
     this.props.dispatch(changeCategoryName(""));
-    this.props.dispatch(changeParentId(""));
     this.props.dispatch(changeImage(""));
     this.props.dispatch(changeIsActive(""));
   };
@@ -24,8 +22,6 @@ class CreateCategory extends Component {
   onChangeCategoryName = e =>
     this.props.dispatch(changeCategoryName(e.target.value));
 
-  onChangeParentId = e => this.props.dispatch(changeParentId(e.target.value));
-
   onChangeImage = e => this.props.dispatch(changeImage(e.target.value));
 
   onChangeIsActive = e => this.props.dispatch(changeIsActive(e.target.value));
@@ -34,7 +30,7 @@ class CreateCategory extends Component {
     e.preventDefault();
     const newCategory = {
       categoryName: this.props.categoryName,
-      parentId: this.props.parentId,
+      parentId: this.props.match.params.id,
       isActive: this.props.isActive
     };
     axios
@@ -49,11 +45,9 @@ class CreateCategory extends Component {
   };
 
   submitValidation = () => {
-    return (
-      Boolean(this.props.categoryName) && Boolean(this.props.parentId)
-      // &&Boolean(this.props.isActive)
-      // && Boolean(this.props.image)
-    );
+    return Boolean(this.props.categoryName);
+    // &&Boolean(this.props.isActive)
+    // && Boolean(this.props.image)
   };
 
   render() {
@@ -68,15 +62,6 @@ class CreateCategory extends Component {
               className="form-control"
               value={this.props.categoryName}
               onChange={this.onChangeCategoryName}
-            />
-          </div>
-          <div className="form-group">
-            <label>Parent ID: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.props.parentId}
-              onChange={this.onChangeParentId}
             />
           </div>
           <div className="form-group">
@@ -114,11 +99,10 @@ class CreateCategory extends Component {
 
 const mapStateToProps = state => {
   const categoryName = state.categoryReducer.categoryName;
-  const parentId = state.categoryReducer.parentId;
   const image = state.categoryReducer.image;
   const isActive = state.categoryReducer.isActive;
 
-  return { categoryName, parentId, image, isActive };
+  return { categoryName, image, isActive };
 };
 
 export default connect(mapStateToProps)(CreateCategory);

@@ -14,70 +14,80 @@ const initialState = {
   isFetchingCategory: true,
   categoryName: "",
   parentId: "",
-  errors: [{
-    createCategoryError: false,
-    editCategoryError: false,
-    fetchCategoryError: false,
-    deleteProductError: false
-  }]
+  errors: [
+    {
+      createCategoryError: false,
+      editCategoryError: false,
+      fetchCategoryError: false,
+      deleteProductError: false
+    }
+  ]
 };
 
 const categoryReducer = (state = initialState, action) => {
   switch (action.type) {
-    case (GET_CATEGORIES):
+    case GET_CATEGORIES:
       return {
         ...state,
         categories: action.categories
       };
-    case(IS_FETCHING_CATEGORY):
+    case IS_FETCHING_CATEGORY:
       return {
         ...state,
         isFetchingCategory: action.bool
       };
-    case(FETCH_CATEGORY_ERROR):
+    case FETCH_CATEGORY_ERROR:
       return {
         ...state,
-        errors: [{
-          ...state.errors,
-          fetchCategoryError: action.fetchCategoryError
-        }]
+        errors: [
+          {
+            ...state.errors,
+            fetchCategoryError: action.fetchCategoryError
+          }
+        ]
       };
-    case (DELETE_CATEGORY_ERROR):
+    case DELETE_CATEGORY_ERROR:
       return {
         ...state,
-        errors: [{
-          deleteCategoryError: action.deleteCategoryError
-        }]
+        errors: [
+          {
+            deleteCategoryError: action.deleteCategoryError
+          }
+        ]
       };
-    case (CHANGE_CATEGORY_NAME):
+    case CHANGE_CATEGORY_NAME:
       return {
         ...state,
         categoryName: action.categoryName
       };
-    case(CHANGE_PARENT_ID):
+    case CHANGE_PARENT_ID:
       return {
         ...state,
         parentId: action.parentId
       };
-    case(CREATE_CATEGORY_ERROR):
+    case CREATE_CATEGORY_ERROR:
       return {
         ...state,
-        errors: [{
-          ...state.errors,
-          createCategoryError: action.createCategoryError
-        }]
+        errors: [
+          {
+            ...state.errors,
+            createCategoryError: action.createCategoryError
+          }
+        ]
       };
-    case (EDIT_CATEGORY_ERROR):
+    case EDIT_CATEGORY_ERROR:
       return {
         ...state,
-        errors: [{
-          ...state.errors,
-          editCategoryError: action.editCategoryError
-        }]
+        errors: [
+          {
+            ...state.errors,
+            editCategoryError: action.editCategoryError
+          }
+        ]
       };
     default:
-      return state
+      return state;
   }
 };
 
-export default categoryReducer
+export default categoryReducer;

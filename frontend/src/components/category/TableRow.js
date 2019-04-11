@@ -1,10 +1,9 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const TableRow = props => {
-
   const deleteItem = () => {
-    props.onDelete(props.category._id)
+    props.onDelete(props.category._id);
   };
 
   /** @namespace props.category */
@@ -13,7 +12,18 @@ const TableRow = props => {
       <td>{props.category.parentId}</td>
       <td>{props.category.categoryName}</td>
       <td>
-        <Link to={"/category/edit/" + props.category._id} className="btn btn-primary">
+        <Link
+          to={"/category/create/" + props.category._id}
+          className="btn btn-primary"
+        >
+          Add
+        </Link>
+      </td>
+      <td>
+        <Link
+          to={"/category/edit/" + props.category._id}
+          className="btn btn-primary"
+        >
           Edit
         </Link>
       </td>
@@ -26,4 +36,4 @@ const TableRow = props => {
   );
 };
 
-export default TableRow
+export default TableRow;
