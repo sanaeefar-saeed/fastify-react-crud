@@ -1,14 +1,15 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { connect } from "react-redux";
+import React, {Component} from "react"
+import axios from "axios"
+import {connect} from "react-redux"
 import {
   changeCategoryName,
   changeImage,
   changeIsActive,
   createCategoryError
-} from "../../actions/categoryActions";
+} from "../../actions/categoryActions"
 
 class CreateCategory extends Component {
+
   clearInputs = () => {
     this.props.dispatch(changeCategoryName(""));
     this.props.dispatch(changeImage(""));
@@ -16,11 +17,10 @@ class CreateCategory extends Component {
   };
 
   componentDidMount() {
-    this.clearInputs();
+    this.clearInputs()
   }
 
-  onChangeCategoryName = e =>
-    this.props.dispatch(changeCategoryName(e.target.value));
+  onChangeCategoryName = e => this.props.dispatch(changeCategoryName(e.target.value));
 
   onChangeImage = e => this.props.dispatch(changeImage(e.target.value));
 
@@ -41,7 +41,7 @@ class CreateCategory extends Component {
       })
       .catch(err => this.props.dispatch(createCategoryError(err)));
 
-    this.clearInputs();
+    this.clearInputs()
   };
 
   submitValidation = () => {
@@ -52,7 +52,7 @@ class CreateCategory extends Component {
 
   render() {
     return (
-      <div style={{ marginTop: 10 }}>
+      <div style={{marginTop: 10}}>
         <h3>Add New Category</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
@@ -102,7 +102,7 @@ const mapStateToProps = state => {
   const image = state.categoryReducer.image;
   const isActive = state.categoryReducer.isActive;
 
-  return { categoryName, image, isActive };
+  return {categoryName, image, isActive}
 };
 
-export default connect(mapStateToProps)(CreateCategory);
+export default connect(mapStateToProps)(CreateCategory)

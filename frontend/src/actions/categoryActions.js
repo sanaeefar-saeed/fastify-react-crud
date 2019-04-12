@@ -9,32 +9,17 @@ const CHANGE_IS_ACTIVE = "CHANGE_IS_ACTIVE";
 const CREATE_CATEGORY_ERROR = "CREATE_CATEGORY_ERROR";
 const EDIT_CATEGORY_ERROR = "EDIT_CATEGORY_ERROR";
 
-const getCategories = categories => ({ type: GET_CATEGORIES, categories });
-const isFetchingCategory = bool => ({ type: IS_FETCHING_CATEGORY, bool });
-const fetchCategoryError = fetchCategoryError => ({
-  type: FETCH_CATEGORY_ERROR,
-  fetchCategoryError
-});
-const deleteCategoryError = deleteCategoryError => ({
-  type: DELETE_CATEGORY_ERROR,
-  deleteCategoryError
-});
+const getCategories = categories => ({type: GET_CATEGORIES, categories});
+const isFetchingCategory = bool => ({type: IS_FETCHING_CATEGORY, bool});
+const fetchCategoryError = fetchCategoryError => ({type: FETCH_CATEGORY_ERROR, fetchCategoryError});
+const deleteCategoryError = deleteCategoryError => ({type: DELETE_CATEGORY_ERROR, deleteCategoryError});
 
-const changeCategoryName = categoryName => ({
-  type: CHANGE_CATEGORY_NAME,
-  categoryName
-});
-const changeParentId = parentId => ({ type: CHANGE_PARENT_ID, parentId });
-const changeImage = image => ({ type: CHANGE_IMAGE, image });
-const changeIsActive = isActive => ({ type: CHANGE_IS_ACTIVE, isActive });
-const createCategoryError = createCategoryError => ({
-  type: CREATE_CATEGORY_ERROR,
-  createCategoryError
-});
-const editCategoryError = editCategoryError => ({
-  type: EDIT_CATEGORY_ERROR,
-  editCategoryError
-});
+const changeCategoryName = categoryName => ({type: CHANGE_CATEGORY_NAME, categoryName});
+const changeParentId = parentId => ({type: CHANGE_PARENT_ID, parentId});
+const changeImage = image => ({type: CHANGE_IMAGE, image});
+const changeIsActive = isActive => ({type: CHANGE_IS_ACTIVE, isActive});
+const createCategoryError = createCategoryError => ({type: CREATE_CATEGORY_ERROR, createCategoryError});
+const editCategoryError = editCategoryError => ({type: EDIT_CATEGORY_ERROR, editCategoryError});
 
 export {
   GET_CATEGORIES,
@@ -57,4 +42,4 @@ export {
   changeIsActive,
   createCategoryError,
   editCategoryError
-};
+}

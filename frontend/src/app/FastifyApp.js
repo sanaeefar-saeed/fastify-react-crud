@@ -1,7 +1,6 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React from "react"
+import "bootstrap/dist/css/bootstrap.min.css"
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom"
 
 import CreateCategory from "../components/category/create.component";
 import EditCategory from "../components/category/edit.component";
@@ -42,24 +41,25 @@ const FastifyApp = () => {
               </li>
             </ul>
           </div>
-        </nav>{" "}
-        <br />
-        <h2>EBG Admin Panel</h2> <br />
+        </nav>
+        {" "}
+        <br/>
+        <h2>EBG Admin Panel</h2> <br/>
         <Switch>
           <Route
             exact
             path="/category/create/:id?"
             component={CreateCategory}
           />
-          <Route path="/category/edit/:id" component={EditCategory} />
-          <Route path="/category/index" component={categoryIndex} />
-          <Route exact path="/product/create" component={CreateProduct} />
-          <Route path="/product/edit/:id" component={EditProduct} />
-          <Route path="/product/index" component={productIndex} />
+          <Route path="/category/edit/:id" component={EditCategory}/>
+          <Route path="/category/index" component={categoryIndex}/>
+          <Route exact path="/product/create" component={CreateProduct}/>
+          <Route path="/product/edit/:id" component={EditProduct}/>
+          <Route path="/product/index" component={productIndex}/>
         </Switch>
       </div>
     </Router>
-  );
+  )
 };
 
-export default FastifyApp;
+export default FastifyApp

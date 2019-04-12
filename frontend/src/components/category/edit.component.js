@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { connect } from "react-redux";
+import React, {Component} from "react"
+import axios from "axios"
+import {connect} from "react-redux"
 import {
   changeCategoryName,
   changeParentId,
   editCategoryError
-} from "../../actions/categoryActions";
+} from "../../actions/categoryActions"
 
 class EditCategory extends Component {
   componentDidMount() {
@@ -18,8 +18,7 @@ class EditCategory extends Component {
       .catch(err => console.log(err));
   }
 
-  onChangeCategoryName = e =>
-    this.props.dispatch(changeCategoryName(e.target.value));
+  onChangeCategoryName = e => this.props.dispatch(changeCategoryName(e.target.value));
 
   onChangeParentId = e => this.props.dispatch(changeParentId(e.target.value));
 
@@ -40,7 +39,7 @@ class EditCategory extends Component {
       })
       .catch(err => this.props.dispatch(editCategoryError(err)));
 
-    this.props.history.push("/category/index");
+    this.props.history.push("/category/index")
   };
 
   submitValidation = () => {
@@ -49,7 +48,7 @@ class EditCategory extends Component {
 
   render() {
     return (
-      <div style={{ marginTop: 10 }}>
+      <div style={{marginTop: 10}}>
         <h3 align="center">Update Category</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
@@ -90,7 +89,7 @@ const mapStateToProps = state => {
   const parentId = state.categoryReducer.parentId;
   const editCategoryError = state.categoryReducer.editCategoryError;
 
-  return { categoryName, parentId, editCategoryError };
+  return {categoryName, parentId, editCategoryError};
 };
 
 export default connect(mapStateToProps)(EditCategory);
