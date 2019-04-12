@@ -12,6 +12,7 @@ import {
 class CategoryIndex extends Component {
 
   componentDidMount() {
+    console.log('component did mount');
     axios
       .get("http://localhost:4000/api/categories")
       .then(response => {

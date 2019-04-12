@@ -4,7 +4,7 @@ import {connect} from "react-redux"
 import {
   changeCategoryName,
   changeParentId,
-  editCategoryError
+  editCategoryError, fetchCategoryError, getCategories, isFetchingCategory
 } from "../../actions/categoryActions"
 
 class EditCategory extends Component {
@@ -29,15 +29,20 @@ class EditCategory extends Component {
       parentId: this.props.parentId
     };
     axios
-      .put(
-        "http://localhost:4000/api/categories/" + this.props.match.params.id,
-        editedObject
-      )
+      .put("http://localhost:4000/api/categories/" + this.props.match.params.id, editedObject)
       .then(res => {
-        window.location.reload();
-        console.log(res.data);
+        // window.location.reload();
+        console.log(res.data)
       })
       .catch(err => this.props.dispatch(editCategoryError(err)));
+
+    axios
+      .get("http://localhost:4000/api/categories")
+      .then(response => {
+        this.props.dispatch(getCategories(response.data));
+        this.props.dispatch(isFetchingCategory(false))
+      })
+      .catch(err => this.props.dispatch(fetchCategoryError(err)));
 
     this.props.history.push("/category/index")
   };
