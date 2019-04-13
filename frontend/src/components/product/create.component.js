@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Switch from "react-switch";
+import ImageUploader from "react-images-upload";
 import { connect } from "react-redux";
 import {
   changeProductName,
@@ -26,6 +28,11 @@ import {
 } from "../../actions/productActions";
 
 class CreateProduct extends Component {
+  state = {
+    onSale: false,
+    image: null
+  };
+
   clearInputs = () => {
     this.props.dispatch(changeProductName(""));
     this.props.dispatch(changeProductId(""));
@@ -47,11 +54,22 @@ class CreateProduct extends Component {
     this.props.dispatch(changePrimeCategory(""));
     this.props.dispatch(changeStoreId(""));
     this.props.dispatch(changePrimeCatName(""));
+
+    this.setState({
+      onSale: false,
+      image: null
+    });
   };
 
   componentDidMount() {
     this.clearInputs();
   }
+
+  onDropImage = file => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file[0]);
+    reader.onload = e => this.setState({ image: e.target.result });
+  };
 
   onChangeProductName = e =>
     this.props.dispatch(changeProductName(e.target.value));
@@ -79,6 +97,8 @@ class CreateProduct extends Component {
   onChangeStoreId = e => this.props.dispatch(changeStoreId(e.target.value));
   onChangePrimeCatName = e =>
     this.props.dispatch(changePrimeCatName(e.target.value));
+  onSaleChange = checked => this.setState({ onSale: checked });
+
   onSubmit = e => {
     e.preventDefault();
     const newProduct = {
@@ -101,7 +121,9 @@ class CreateProduct extends Component {
       ctype: this.props.ctype,
       primeCategory: this.props.primeCategory,
       storeId: this.props.storeId,
-      primeCatName: this.props.primeCatName
+      primeCatName: this.props.primeCatName,
+      onSale: this.state.onSale,
+      image: this.state.image
     };
     axios
       .post("http://localhost:4000/api/products", newProduct)
@@ -122,6 +144,18 @@ class CreateProduct extends Component {
         <h3>Add New Product</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
+            <label>CATEGORYID:</label>
+            <select
+              className="form-control"
+              value={this.props.categoryId}
+              onChange={this.onChangeCategoryId}
+            />
+          </div>
+          <div className="form-group">
+            <label>Level2 CATEGORYID:</label>
+            <select className="form-control" value="" onChange="" />
+          </div>
+          <div className="form-group">
             <label>Product Name: </label>
             <input
               type="text"
@@ -131,24 +165,95 @@ class CreateProduct extends Component {
             />
           </div>
           <div className="form-group">
-            <label>Product ID: </label>
+            <label>PRICE:</label>
             <input
               type="text"
               className="form-control"
-              value={this.props.productId}
-              onChange={this.onChangeProductId}
+              value={this.props.price}
+              onChange={this.onChangePrice}
             />
           </div>
           <div className="form-group">
-            <label>CATEGORYID:</label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.props.categoryId}
-              onChange={this.onChangeCategoryId}
+            <label>
+              <span style={{ marginRight: 20 }}>On Sale</span>
+              <Switch
+                onChange={this.onSaleChange}
+                checked={this.state.onSale}
+              />
+            </label>
+          </div>
+          <div className="form-group">
+            <label>DISCOUNT:</label>
+            <input type="text" className="form-control" value="" onChange="" />
+          </div>
+          <div className="form-group">
+            <label>Sale Price:</label>
+            <input type="text" className="form-control" value="" onChange="" />
+          </div>
+          <div className="form-group">
+            <label>DESCRIPTION:</label>
+            <textarea className="form-control" />
+          </div>
+          <div className="form-group">
+            <label>Product Images: </label>
+            <ImageUploader
+              withIcon={true}
+              buttonText="Choose image"
+              onChange={this.onDropImage}
+              imgExtension={[".jpg", ".gif", ".png"]}
+              maxFileSize={5242880}
             />
           </div>
+          <div className="form-group">
+            <label>Product Videos: </label>
+            <ImageUploader
+              withIcon={true}
+              buttonText="Choose Video"
+              onChange={this.onDropImage}
+              imgExtension={[".jpg", ".gif", ".png"]}
+              maxFileSize={5242880}
+            />
+          </div>
+          <div className="form-group">
+            <label>Shipping:</label>
+            <input type="text" className="form-control" value="" onChange="" />
+          </div>
+          <div className="form-group">
+            <label>
+              <span style={{ marginRight: 20 }}>Availibility</span>
+              <Switch onChange="" checked="" />
+            </label>
+          </div>
+          <div className="form-group">
+            <label>GUARANTEE:</label>
+            <select className="form-control" value="" onChange="">
+              <option>1 year</option>
+              <option>2 year</option>
+              <option>3 year</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Return:</label>
+            <select className="form-control" value="" onChange="">
+              <option>1 day</option>
+              <option>3 day</option>
+              <option>5 day</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Builder:</label>
+            <select className="form-control" value="" onChange="">
+              <option>Brand</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>
+              <span style={{ marginRight: 20 }}>Visibility</span>
+              <Switch onChange="" checked="" />
+            </label>
+          </div>
 
+          {/*
           <div className="form-group">
             <label>TITLE:</label>
             <input
@@ -158,7 +263,6 @@ class CreateProduct extends Component {
               onChange={this.onChangeTitle}
             />
           </div>
-
           <div className="form-group">
             <label>COUNT:</label>
             <input
@@ -168,7 +272,6 @@ class CreateProduct extends Component {
               onChange={this.onChangeCount}
             />
           </div>
-
           <div className="form-group">
             <label>COND:</label>
             <input
@@ -178,17 +281,6 @@ class CreateProduct extends Component {
               onChange={this.onChangeCond}
             />
           </div>
-
-          <div className="form-group">
-            <label>PRICE:</label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.props.price}
-              onChange={this.onChangePrice}
-            />
-          </div>
-
           <div className="form-group">
             <label>PARSEDATE:</label>
             <input
@@ -198,17 +290,6 @@ class CreateProduct extends Component {
               onChange={this.onChangeParseDate}
             />
           </div>
-
-          <div className="form-group">
-            <label>DESCRIPTION:</label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.props.description}
-              onChange={this.onChangeDescription}
-            />
-          </div>
-
           <div className="form-group">
             <label>CURIER:</label>
             <input
@@ -218,17 +299,6 @@ class CreateProduct extends Component {
               onChange={this.onChangeCurier}
             />
           </div>
-
-          <div className="form-group">
-            <label>GUARANTEE:</label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.props.guarantee}
-              onChange={this.onChangeGuarantee}
-            />
-          </div>
-
           <div className="form-group">
             <label>URL:</label>
             <input
@@ -258,17 +328,6 @@ class CreateProduct extends Component {
               onChange={this.onChangeManagerId}
             />
           </div>
-
-          <div className="form-group">
-            <label>STATUS:</label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.props.status}
-              onChange={this.onChangeStatus}
-            />
-          </div>
-
           <div className="form-group">
             <label>CTYPE:</label>
             <input
@@ -308,7 +367,7 @@ class CreateProduct extends Component {
               onChange={this.onChangePrimeCatName}
             />
           </div>
-
+ */}
           <div className="form-group">
             <button
               type="submit"
@@ -317,6 +376,11 @@ class CreateProduct extends Component {
               onClick={this.onSubmit}
             >
               Save Product
+            </button>
+          </div>
+          <div className="form-group">
+            <button type="reset" className="btn btn-secondary">
+              Discard Changes
             </button>
           </div>
         </form>
