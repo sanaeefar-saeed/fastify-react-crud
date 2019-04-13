@@ -12,7 +12,6 @@ import {
 class CategoryIndex extends Component {
 
   componentDidMount() {
-    console.log('component did mount');
     axios
       .get("http://localhost:4000/api/categories")
       .then(response => {
@@ -26,9 +25,8 @@ class CategoryIndex extends Component {
     const categories = this.props.categories.filter(category => category._id !== id);
     axios
       .delete("http://localhost:4000/api/categories/" + id)
+      .then(res => this.props.dispatch(getCategories(categories)))
       .catch(err => this.props.dispatch(deleteCategoryError(err)));
-
-    this.props.dispatch(getCategories(categories))
   };
 
   render() {
@@ -40,6 +38,10 @@ class CategoryIndex extends Component {
           <tr>
             <th>ID</th>
             <th>Category Name</th>
+            <th>Image</th>
+            <th>Add subCat</th>
+            <th>Edit Cat</th>
+            <th>Remove Cat</th>
           </tr>
           </thead>
           <tbody>
@@ -58,9 +60,7 @@ class CategoryIndex extends Component {
 }
 
 const mapStateToProps = state => {
-  const categories = state.categoryReducer.categories;
-
-  return {categories}
+  return {categories: state.categoryReducer.categories}
 };
 
 export default connect(mapStateToProps)(CategoryIndex)

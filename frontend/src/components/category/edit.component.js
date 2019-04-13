@@ -1,55 +1,69 @@
 import React, {Component} from "react"
 import axios from "axios"
+import Switch from "react-switch"
+import ImageUploader from 'react-images-upload'
 import {connect} from "react-redux"
 import {
-  changeCategoryName,
-  changeParentId,
-  editCategoryError, fetchCategoryError, getCategories, isFetchingCategory
+  getCategories,
+  editCategoryError,
+  fetchCategoryError,
 } from "../../actions/categoryActions"
 
 class EditCategory extends Component {
+  state = {
+    categoryName: '',
+    isVisible: false,
+    image: null
+  };
+
   componentDidMount() {
     axios
       .get("http://localhost:4000/api/categories/" + this.props.match.params.id)
       .then(response => {
-        this.props.dispatch(changeCategoryName(response.data.categoryName));
-        this.props.dispatch(changeParentId(response.data.parentId));
+        this.setState({
+          categoryName: response.data.categoryName,
+          isVisible: response.data.isVisible,
+          image: response.data.image
+        })
       })
-      .catch(err => console.log(err));
+      .catch(err => this.props.dispatch(fetchCategoryError(err)))
   }
 
-  onChangeCategoryName = e => this.props.dispatch(changeCategoryName(e.target.value));
+  onChangeCategoryName = e => this.setState({categoryName: e.target.value});
 
-  onChangeParentId = e => this.props.dispatch(changeParentId(e.target.value));
+  onVisibilityChange = (checked) => this.setState({isVisible: checked});
+
+  onDropImage = file => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file[0]);
+    reader.onload = (e) => this.setState({image: e.target.result})
+  };
 
   onSubmit = e => {
     e.preventDefault();
-    const editedObject = {
-      categoryName: this.props.categoryName,
-      parentId: this.props.parentId
+
+    const editedCategoryId = this.props.match.params.id;
+
+    const editedCategory = {
+      categoryName: this.state.categoryName,
+      isVisible: this.state.isVisible,
+      image: this.state.image
     };
-    axios
-      .put("http://localhost:4000/api/categories/" + this.props.match.params.id, editedObject)
-      .then(res => {
-        // window.location.reload();
-        console.log(res.data)
-      })
-      .catch(err => this.props.dispatch(editCategoryError(err)));
+
+    const newCategories = this.props.categories.map(category => {
+      if (category._id === editedCategoryId) return {_id: editedCategoryId, ...editedCategory};
+      else return category
+    });
 
     axios
-      .get("http://localhost:4000/api/categories")
-      .then(response => {
-        this.props.dispatch(getCategories(response.data));
-        this.props.dispatch(isFetchingCategory(false))
-      })
-      .catch(err => this.props.dispatch(fetchCategoryError(err)));
+      .put("http://localhost:4000/api/categories/" + editedCategoryId, editedCategory)
+      .then(res => this.props.dispatch(getCategories(newCategories)))
+      .catch(err => this.props.dispatch(editCategoryError(err)));
 
     this.props.history.push("/category/index")
   };
 
-  submitValidation = () => {
-    return Boolean(this.props.categoryName) && Boolean(this.props.parentId);
-  };
+  submitValidation = () => Boolean(this.state.categoryName);
 
   render() {
     return (
@@ -61,17 +75,24 @@ class EditCategory extends Component {
             <input
               type="text"
               className="form-control"
-              value={this.props.categoryName}
+              value={this.state.categoryName}
               onChange={this.onChangeCategoryName}
             />
           </div>
+          <div className='form-group'>
+            <label>
+              <span style={{marginRight: 20}}>Visibility</span>
+              <Switch onChange={this.onVisibilityChange} checked={this.state.isVisible}/>
+            </label>
+          </div>
           <div className="form-group">
-            <label>ParentId: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.props.parentId}
-              onChange={this.onChangeParentId}
+            <label>Category Image: </label>
+            <ImageUploader
+              withIcon={true}
+              buttonText='Choose image'
+              onChange={this.onDropImage}
+              imgExtension={['.jpg', '.gif', '.png']}
+              maxFileSize={5242880}
             />
           </div>
           <div className="form-group">
@@ -80,7 +101,7 @@ class EditCategory extends Component {
               className="btn btn-primary"
               disabled={!this.submitValidation()}
             >
-              Update Category
+              Save Category
             </button>
           </div>
         </form>
@@ -90,11 +111,7 @@ class EditCategory extends Component {
 }
 
 const mapStateToProps = state => {
-  const categoryName = state.categoryReducer.categoryName;
-  const parentId = state.categoryReducer.parentId;
-  const editCategoryError = state.categoryReducer.editCategoryError;
-
-  return {categoryName, parentId, editCategoryError};
+  return {categories: state.categoryReducer.categories}
 };
 
-export default connect(mapStateToProps)(EditCategory);
+export default connect(mapStateToProps)(EditCategory)

@@ -1,53 +1,58 @@
 import React, {Component} from "react"
 import axios from "axios"
-import {connect} from "react-redux"
-import {
-  changeCategoryName,
-  changeImage,
-  changeIsActive,
-  createCategoryError
-} from "../../actions/categoryActions"
+import Switch from "react-switch"
+import ImageUploader from 'react-images-upload'
+import {connect} from "react-redux";
+import {createCategoryError} from "../../actions/categoryActions"
 
 class CreateCategory extends Component {
+  state = {
+    categoryName: '',
+    isVisible: false,
+    image: null
+  };
 
   clearInputs = () => {
-    this.props.dispatch(changeCategoryName(""));
-    this.props.dispatch(changeImage(""));
-    this.props.dispatch(changeIsActive(""));
+    this.setState({
+      categoryName: '',
+      isVisible: false,
+      image: null
+    })
   };
 
   componentDidMount() {
     this.clearInputs()
   }
 
-  onChangeCategoryName = e => this.props.dispatch(changeCategoryName(e.target.value));
+  onChangeCategoryName = e => this.setState({categoryName: e.target.value});
 
-  onChangeImage = e => this.props.dispatch(changeImage(e.target.value));
+  onDropImage = file => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file[0]);
+    reader.onload = (e) => this.setState({image: e.target.result})
+  };
 
-  onChangeIsActive = e => this.props.dispatch(changeIsActive(e.target.value));
+  onVisibilityChange = (checked) => this.setState({isVisible: checked});
 
   onSubmit = e => {
     e.preventDefault();
+
     const newCategory = {
-      categoryName: this.props.categoryName,
+      categoryName: this.state.categoryName,
       parentId: this.props.match.params.id,
-      isActive: this.props.isActive
+      isVisible: this.state.isVisible,
+      image: this.state.image
     };
+
     axios
       .post("http://localhost:4000/api/categories", newCategory)
-      .then(res => {
-        window.location.reload();
-        console.log(res.data);
-      })
       .catch(err => this.props.dispatch(createCategoryError(err)));
 
     this.clearInputs()
   };
 
   submitValidation = () => {
-    return Boolean(this.props.categoryName);
-    // &&Boolean(this.props.isActive)
-    // && Boolean(this.props.image)
+    return Boolean(this.state.categoryName);
   };
 
   render() {
@@ -60,26 +65,24 @@ class CreateCategory extends Component {
             <input
               type="text"
               className="form-control"
-              value={this.props.categoryName}
+              value={this.state.categoryName}
               onChange={this.onChangeCategoryName}
             />
           </div>
-          <div className="form-group">
-            <label>Category Image: </label>
-            <input
-              type="file"
-              className="form-control"
-              value={this.props.image}
-              onChange={this.onChangeImage}
-            />
+          <div className='form-group'>
+            <label>
+              <span style={{marginRight: 20}}>Visibility</span>
+              <Switch onChange={this.onVisibilityChange} checked={this.state.isVisible}/>
+            </label>
           </div>
           <div className="form-group">
-            <label>Visibility: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.props.isActive}
-              onChange={this.onChangeIsActive}
+            <label>Category Image: </label>
+            <ImageUploader
+              withIcon={true}
+              buttonText='Choose image'
+              onChange={this.onDropImage}
+              imgExtension={['.jpg', '.gif', '.png']}
+              maxFileSize={5242880}
             />
           </div>
           <div className="form-group">
@@ -97,12 +100,4 @@ class CreateCategory extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  const categoryName = state.categoryReducer.categoryName;
-  const image = state.categoryReducer.image;
-  const isActive = state.categoryReducer.isActive;
-
-  return {categoryName, image, isActive}
-};
-
-export default connect(mapStateToProps)(CreateCategory)
+export default connect()(CreateCategory)

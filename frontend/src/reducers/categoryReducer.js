@@ -3,17 +3,13 @@ import {
   IS_FETCHING_CATEGORY,
   FETCH_CATEGORY_ERROR,
   DELETE_CATEGORY_ERROR,
-  CHANGE_CATEGORY_NAME,
-  CHANGE_PARENT_ID,
   CREATE_CATEGORY_ERROR,
-  EDIT_CATEGORY_ERROR
+  EDIT_CATEGORY_ERROR,
 } from "../actions/categoryActions"
 
 const initialState = {
   categories: [],
   isFetchingCategory: true,
-  categoryName: '',
-  parentId: '',
   errors: {
     createCategoryError: false,
     editCategoryError: false,
@@ -48,16 +44,6 @@ const categoryReducer = (state = initialState, action) => {
         errors: {
           deleteCategoryError: action.deleteCategoryError
         }
-      };
-    case CHANGE_CATEGORY_NAME:
-      return {
-        ...state,
-        categoryName: action.categoryName
-      };
-    case CHANGE_PARENT_ID:
-      return {
-        ...state,
-        parentId: action.parentId
       };
     case CREATE_CATEGORY_ERROR:
       return {
