@@ -9,8 +9,14 @@ const TableRow = props => {
 
   return (
     <tr>
-      <td>{props.product.productId}</td>
+      <td>
+        <img src={props.product.image} alt='not found' width={40} height={40}/>
+      </td>
       <td>{props.product.productName}</td>
+      <td>{props.product.price}</td>
+      <td>
+        {props.product.visibility ? <p>&#10004;</p> : <p>&#10006;</p>}
+      </td>
       <td>
         <Link to={"/product/edit/" + props.product._id} className="btn btn-primary">
           Edit

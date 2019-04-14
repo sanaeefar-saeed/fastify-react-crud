@@ -1,25 +1,21 @@
 import {
   GET_PRODUCTS,
   IS_FETCHING_PRODUCT,
-  FETCH_PRODUCT_ERROR,
-  DELETE_PRODUCT_ERROR,
-  CHANGE_PRODUCT_NAME,
-  CHANGE_PRODUCT_ID,
   CREATE_PRODUCT_ERROR,
-  EDIT_PRODUCT_ERROR
+  EDIT_PRODUCT_ERROR,
+  FETCH_PRODUCT_ERROR,
+  DELETE_PRODUCT_ERROR
 } from "../actions/productActions";
 
 const initialState = {
   products: [],
   isFetchingProduct: true,
-  productName: '',
-  productId: '',
-  errors: [{
+  errors: {
     createProductError: false,
     editProductError: false,
     fetchProductError: false,
     deleteProductError: false
-  }]
+  }
 };
 
 const productReducer = (state = initialState, action) => {
@@ -34,47 +30,37 @@ const productReducer = (state = initialState, action) => {
         ...state,
         isFetchingProduct: action.bool
       };
-    case (FETCH_PRODUCT_ERROR):
-      return {
-        ...state,
-        errors: [{
-          ...state.errors,
-          fetchProductError: action.fetchProductError
-        }]
-      };
-    case (DELETE_PRODUCT_ERROR):
-      return {
-        ...state,
-        errors: [{
-          ...state.errors,
-          deleteProductError: action.deleteProductError
-        }]
-      };
-    case (CHANGE_PRODUCT_NAME):
-      return {
-        ...state,
-        productName: action.productName
-      };
-    case(CHANGE_PRODUCT_ID):
-      return {
-        ...state,
-        productId: action.productId
-      };
     case(CREATE_PRODUCT_ERROR):
       return {
         ...state,
-        errors: [{
+        errors: {
           ...state.errors,
-          createProductError: action.createProductError
-        }]
+          createProductError: action.err
+        }
       };
     case (EDIT_PRODUCT_ERROR):
       return {
         ...state,
-        errors: [{
+        errors: {
           ...state.errors,
-          editProductError: action.editProductError
-        }]
+          editProductError: action.err
+        }
+      };
+    case (FETCH_PRODUCT_ERROR):
+      return {
+        ...state,
+        errors: {
+          ...state.errors,
+          fetchProductError: action.err
+        }
+      };
+    case (DELETE_PRODUCT_ERROR):
+      return {
+        ...state,
+        errors: {
+          ...state.errors,
+          deleteProductError: action.err
+        }
       };
     default:
       return state

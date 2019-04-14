@@ -12,6 +12,7 @@ import {
 class EditCategory extends Component {
   state = {
     categoryName: '',
+    isRootCategory: false,
     isVisible: false,
     image: null
   };
@@ -22,6 +23,7 @@ class EditCategory extends Component {
       .then(response => {
         this.setState({
           categoryName: response.data.categoryName,
+          isRootCategory: response.data.isRootCategory,
           isVisible: response.data.isVisible,
           image: response.data.image
         })
@@ -30,6 +32,8 @@ class EditCategory extends Component {
   }
 
   onChangeCategoryName = e => this.setState({categoryName: e.target.value});
+
+  isRootCategoryChange = checked => this.setState({isRootCategory: checked});
 
   onVisibilityChange = (checked) => this.setState({isVisible: checked});
 
@@ -46,6 +50,7 @@ class EditCategory extends Component {
 
     const editedCategory = {
       categoryName: this.state.categoryName,
+      isRootCategory: this.state.isRootCategory,
       isVisible: this.state.isVisible,
       image: this.state.image
     };
@@ -65,6 +70,8 @@ class EditCategory extends Component {
 
   submitValidation = () => Boolean(this.state.categoryName);
 
+  handleDiscardChange = () => this.props.history.push("/category/index");
+
   render() {
     return (
       <div style={{marginTop: 10}}>
@@ -79,8 +86,15 @@ class EditCategory extends Component {
               onChange={this.onChangeCategoryName}
             />
           </div>
-          <div className='form-group'>
+          <div className="form-group">
             <label>
+              <span style={{marginRight: 20}}>Root Cat</span>
+              <Switch
+                onChange={this.isRootCategoryChange}
+                checked={this.state.isRootCategory}
+              />
+            </label>
+            <label style={{marginLeft: 20}}>
               <span style={{marginRight: 20}}>Visibility</span>
               <Switch onChange={this.onVisibilityChange} checked={this.state.isVisible}/>
             </label>
@@ -91,7 +105,7 @@ class EditCategory extends Component {
               withIcon={true}
               buttonText='Choose image'
               onChange={this.onDropImage}
-              imgExtension={['.jpg', '.gif', '.png']}
+              imgExtension={['.jpg', '.gif', '.png', 'jpeg']}
               maxFileSize={5242880}
             />
           </div>
@@ -101,7 +115,15 @@ class EditCategory extends Component {
               className="btn btn-primary"
               disabled={!this.submitValidation()}
             >
-              Save Category
+              Update Category
+            </button>
+            <button
+              style={{marginLeft: 20}}
+              type="reset"
+              className="btn btn-secondary"
+              onClick={this.handleDiscardChange}
+            >
+              Discard Changes
             </button>
           </div>
         </form>

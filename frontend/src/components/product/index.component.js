@@ -27,9 +27,8 @@ class ProductIndex extends Component {
     const products = this.props.products.filter(product => product._id !== id);
     axios
       .delete("http://localhost:4000/api/products/" + id)
+      .then(res=> this.props.dispatch(getProducts(products)))
       .catch(err => this.props.dispatch(deleteProductError(err)));
-
-    this.props.dispatch(getProducts(products));
   };
 
   render() {
@@ -39,8 +38,12 @@ class ProductIndex extends Component {
         <table className="table table-striped" style={{marginTop: 20}}>
           <thead>
           <tr>
-            <th>ID</th>
+            <th>Image</th>
             <th>Product Name</th>
+            <th>Price</th>
+            <th>In Stoke</th>
+            <th>Edit Product</th>
+            <th>Remove</th>
           </tr>
           </thead>
           <tbody>

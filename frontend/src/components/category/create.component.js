@@ -1,13 +1,14 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import axios from "axios";
 import Switch from "react-switch";
 import ImageUploader from "react-images-upload";
-import { connect } from "react-redux";
-import { createCategoryError } from "../../actions/categoryActions";
+import {connect} from "react-redux";
+import {createCategoryError} from "../../actions/categoryActions";
 
 class CreateCategory extends Component {
   state = {
     categoryName: "",
+    isRootCategory: false,
     isVisible: false,
     image: null
   };
@@ -15,6 +16,7 @@ class CreateCategory extends Component {
   clearInputs = () => {
     this.setState({
       categoryName: "",
+      isRootCategory: false,
       isVisible: false,
       image: null
     });
@@ -24,15 +26,17 @@ class CreateCategory extends Component {
     this.clearInputs();
   }
 
-  onChangeCategoryName = e => this.setState({ categoryName: e.target.value });
+  onChangeCategoryName = e => this.setState({categoryName: e.target.value});
 
   onDropImage = file => {
     const reader = new FileReader();
     reader.readAsDataURL(file[0]);
-    reader.onload = e => this.setState({ image: e.target.result });
+    reader.onload = e => this.setState({image: e.target.result});
   };
 
-  onVisibilityChange = checked => this.setState({ isVisible: checked });
+  rootCategoryChange = checked => this.setState({isRootCategory: checked});
+
+  onVisibilityChange = checked => this.setState({isVisible: checked});
 
   onSubmit = e => {
     e.preventDefault();
@@ -40,15 +44,15 @@ class CreateCategory extends Component {
     const newCategory = {
       categoryName: this.state.categoryName,
       parentId: this.props.match.params.id,
+      isRootCategory: this.state.isRootCategory,
       isVisible: this.state.isVisible,
       image: this.state.image
     };
 
     axios
       .post("http://localhost:4000/api/categories", newCategory)
+      .then(res => this.clearInputs())
       .catch(err => this.props.dispatch(createCategoryError(err)));
-
-    this.clearInputs();
   };
 
   submitValidation = () => {
@@ -57,7 +61,7 @@ class CreateCategory extends Component {
 
   render() {
     return (
-      <div style={{ marginTop: 10 }}>
+      <div style={{marginTop: 10}}>
         <h3>Add New Category</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
@@ -71,7 +75,14 @@ class CreateCategory extends Component {
           </div>
           <div className="form-group">
             <label>
-              <span style={{ marginRight: 20 }}>Visibility</span>
+              <span style={{marginRight: 20}}>Root Cat</span>
+              <Switch
+                onChange={this.rootCategoryChange}
+                checked={this.state.isRootCategory}
+              />
+            </label>
+            <label style={{marginLeft: 20}}>
+              <span style={{marginRight: 20}}>Visibility</span>
               <Switch
                 onChange={this.onVisibilityChange}
                 checked={this.state.isVisible}
@@ -84,7 +95,7 @@ class CreateCategory extends Component {
               withIcon={true}
               buttonText="Choose image"
               onChange={this.onDropImage}
-              imgExtension={[".jpg", ".gif", ".png"]}
+              imgExtension={[".jpg", ".gif", ".png", ".jpeg"]}
               maxFileSize={5242880}
             />
           </div>

@@ -2,23 +2,21 @@
 const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
+  primeCategoryId: String,
   categoryId: String,
-  title: String,
-  count: String,
-  cond: String,
+  productName: String,
   price: String,
-  parseDate: String,
+  onSale: Boolean,
+  discount: String,
+  salePrice: String,
   description: String,
-  curier: String,
+  image: Object,
+  video: Object,
+  weight: String,
   guarantee: String,
-  url: String,
-  dt: String,
-  managerId: String,
-  status: String,
-  ctype: String,
-  primeCategory: String,
-  storeId: String,
-  primeCatName: String
+  return: String,
+  brand: String,
+  visibility: Boolean
 });
 
 module.exports = mongoose.model("Product", productSchema);
