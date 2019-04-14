@@ -1,5 +1,8 @@
 import {
-  GET_PRODUCTS,
+  GET_ALL_PRODUCTS,
+  ADD_PRODUCT,
+  UPDATE_PRODUCT,
+  DELETE_PRODUCT,
   IS_FETCHING_PRODUCT,
   CREATE_PRODUCT_ERROR,
   EDIT_PRODUCT_ERROR,
@@ -20,10 +23,28 @@ const initialState = {
 
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
-    case (GET_PRODUCTS):
+    case (GET_ALL_PRODUCTS):
       return {
         ...state,
         products: action.products
+      };
+    case (ADD_PRODUCT):
+      return {
+        ...state,
+        products: [...state.products, action.product]
+      };
+    case(UPDATE_PRODUCT):
+      return {
+        ...state,
+        products: state.products.map(product => {
+          if (product._id === action.product._id) return action.product;
+          else return product
+        })
+      };
+    case (DELETE_PRODUCT):
+      return {
+        ...state,
+        products: state.products.filter(product => product._id !== action.id)
       };
     case (IS_FETCHING_PRODUCT):
       return {

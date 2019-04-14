@@ -2,10 +2,8 @@ import React, {Component} from "react";
 import axios from "axios";
 import Switch from "react-switch";
 import ImageUploader from "react-images-upload";
-
 import {connect} from "react-redux";
-import {createProductError, isFetchingProduct} from "../../actions/productActions";
-import {fetchCategoryError} from "../../actions/categoryActions";
+import {addProduct, createProductError} from "../../actions/productActions";
 
 class CreateProduct extends Component {
   state = {
@@ -50,20 +48,12 @@ class CreateProduct extends Component {
   };
 
   componentDidMount() {
-    this.clearInputs();
-    axios
-      .get("http://localhost:4000/api/categories")
-      .then(response => {
-        this.setState({categories: response.data});
-        this.props.dispatch(isFetchingProduct(false));
-      })
-      .catch(err => this.props.dispatch(fetchCategoryError(err)))
+    this.setState({categories: this.props.categories})
   }
 
   changePrimeCategoryId = e => this.setState({primeCategoryId: e.target.value,});
 
   changeCategoryId = e => this.setState({categoryId: e.target.value});
-
 
   changeProductName = e => this.setState({productName: e.target.value});
 
@@ -141,7 +131,10 @@ class CreateProduct extends Component {
 
     axios
       .post("http://localhost:4000/api/products", newProduct)
-      .then(res => this.clearInputs())
+      .then(res => {
+        this.props.dispatch(addProduct(res.data));
+        this.clearInputs()
+      })
       .catch(err => this.props.dispatch(createProductError(err)));
   };
 
@@ -325,4 +318,8 @@ class CreateProduct extends Component {
   }
 }
 
-export default connect()(CreateProduct);
+const mapStateToProps = state => {
+  return {categories: state.categoryReducer.categories}
+};
+
+export default connect(mapStateToProps)(CreateProduct);

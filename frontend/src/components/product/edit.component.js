@@ -4,10 +4,9 @@ import Switch from "react-switch";
 import ImageUploader from "react-images-upload";
 import {connect} from "react-redux";
 import {
+  updateProduct,
   editProductError,
   fetchProductError,
-  getProducts,
-  isFetchingProduct
 } from "../../actions/productActions";
 
 
@@ -36,6 +35,7 @@ class EditProduct extends Component {
       .get("http://localhost:4000/api/products/" + this.props.match.params.id)
       .then(res => {
         this.setState({
+          categories: this.props.categories,
           primeCategoryId: res.data.primeCategoryId,
           categoryId: res.data.categoryId,
           productName: res.data.productName,
@@ -54,14 +54,6 @@ class EditProduct extends Component {
         })
       })
       .catch(err => this.props.dispatch(fetchProductError(err)));
-
-    axios
-      .get("http://localhost:4000/api/categories")
-      .then(response => {
-        this.setState({categories: response.data});
-        this.props.dispatch(isFetchingProduct(false));
-      })
-      .catch(err => this.props.dispatch(fetchProductError(err)))
   }
 
   changePrimeCategoryId = e => this.setState({primeCategoryId: e.target.value});
@@ -125,8 +117,6 @@ class EditProduct extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const editedProductId = this.props.match.params.id;
-
     const editedProduct = {
       primeCategoryId: this.state.primeCategoryId,
       categoryId: this.state.categoryId,
@@ -145,18 +135,13 @@ class EditProduct extends Component {
       visibility: this.state.visibility
     };
 
-    const newProducts = this.props.products.map(product => {
-      if (product._id === editedProductId) return {_id: editedProductId, ...editedProduct};
-      else return product
-    });
-
-
     axios
-      .put("http://localhost:4000/api/products/" + editedProductId, editedProduct)
-      .then(res => this.props.dispatch(getProducts(newProducts)))
+      .put("http://localhost:4000/api/products/" + this.props.match.params.id, editedProduct)
+      .then(res => {
+        this.props.dispatch(updateProduct(res.data));
+        this.props.history.push("/product/index");
+      })
       .catch(err => this.props.dispatch(editProductError(err)));
-
-    this.props.history.push("/product/index");
   };
 
   submitValidation = () => {
@@ -344,7 +329,7 @@ class EditProduct extends Component {
 }
 
 const mapStateToProps = state => {
-  return {products: state.productReducer.products}
+  return {categories: state.categoryReducer.categories}
 };
 
 export default connect(mapStateToProps)(EditProduct)

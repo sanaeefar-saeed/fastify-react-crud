@@ -3,7 +3,8 @@ import axios from "axios";
 import TableRow from "./TableRow";
 import {connect} from 'react-redux'
 import {
-  getProducts,
+  getAllProducts,
+  deleteProduct,
   isFetchingProduct,
   fetchProductError,
   deleteProductError
@@ -15,7 +16,7 @@ class ProductIndex extends Component {
     axios
       .get("http://localhost:4000/api/products")
       .then(response => {
-        this.props.dispatch(getProducts(response.data));
+        this.props.dispatch(getAllProducts(response.data));
         this.props.dispatch(isFetchingProduct(false))
       })
       .catch(err => {
@@ -24,10 +25,9 @@ class ProductIndex extends Component {
   }
 
   handleDelete = id => {
-    const products = this.props.products.filter(product => product._id !== id);
     axios
       .delete("http://localhost:4000/api/products/" + id)
-      .then(res=> this.props.dispatch(getProducts(products)))
+      .then(res => this.props.dispatch(deleteProduct(res.data._id)))
       .catch(err => this.props.dispatch(deleteProductError(err)));
   };
 
