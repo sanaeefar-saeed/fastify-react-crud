@@ -22,10 +22,6 @@ class CreateCategory extends Component {
     });
   };
 
-  componentDidMount() {
-    this.clearInputs();
-  }
-
   onChangeCategoryName = e => this.setState({categoryName: e.target.value});
 
   onDropImage = file => {

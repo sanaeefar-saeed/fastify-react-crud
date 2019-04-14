@@ -29,12 +29,12 @@ const categoryReducer = (state = initialState, action) => {
         categories: action.categories
       };
     case ADD_CATEGORY:
-      return{
+      return {
         ...state,
         categories: [...state.categories, action.category]
       };
     case UPDATE_CATEGORY:
-      return{
+      return {
         ...state,
         categories: state.categories.map(category => {
           if (category._id === action.category._id) return action.category;
@@ -42,7 +42,7 @@ const categoryReducer = (state = initialState, action) => {
         })
       };
     case DELETE_CATEGORY:
-      return{
+      return {
         ...state,
         categories: state.categories.filter(category => category._id !== action.id)
       };
