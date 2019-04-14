@@ -4,7 +4,7 @@ import Switch from "react-switch"
 import ImageUploader from 'react-images-upload'
 import {connect} from "react-redux"
 import {
-  getCategories,
+  updateCategory,
   editCategoryError,
   fetchCategoryError,
 } from "../../actions/categoryActions"
@@ -46,8 +46,6 @@ class EditCategory extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const editedCategoryId = this.props.match.params.id;
-
     const editedCategory = {
       categoryName: this.state.categoryName,
       isRootCategory: this.state.isRootCategory,
@@ -55,17 +53,13 @@ class EditCategory extends Component {
       image: this.state.image
     };
 
-    const newCategories = this.props.categories.map(category => {
-      if (category._id === editedCategoryId) return {_id: editedCategoryId, ...editedCategory};
-      else return category
-    });
-
     axios
-      .put("http://localhost:4000/api/categories/" + editedCategoryId, editedCategory)
-      .then(res => this.props.dispatch(getCategories(newCategories)))
+      .put("http://localhost:4000/api/categories/" + this.props.match.params.id, editedCategory)
+      .then(res=> {
+        this.props.dispatch(updateCategory(res.data));
+        this.props.history.push("/category/index")
+      })
       .catch(err => this.props.dispatch(editCategoryError(err)));
-
-    this.props.history.push("/category/index")
   };
 
   submitValidation = () => Boolean(this.state.categoryName);

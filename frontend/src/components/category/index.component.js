@@ -3,7 +3,8 @@ import axios from "axios";
 import TableRow from "./TableRow";
 import {connect} from 'react-redux'
 import {
-  getCategories,
+  getAllCategories,
+  deleteCategory,
   isFetchingCategory,
   fetchCategoryError,
   deleteCategoryError
@@ -15,17 +16,16 @@ class CategoryIndex extends Component {
     axios
       .get("http://localhost:4000/api/categories")
       .then(response => {
-        this.props.dispatch(getCategories(response.data));
+        this.props.dispatch(getAllCategories(response.data));
         this.props.dispatch(isFetchingCategory(false))
       })
       .catch(err => this.props.dispatch(fetchCategoryError(err)))
   }
 
   handleDelete = id => {
-    const categories = this.props.categories.filter(category => category._id !== id);
     axios
       .delete("http://localhost:4000/api/categories/" + id)
-      .then(res => this.props.dispatch(getCategories(categories)))
+      .then(res => this.props.dispatch(deleteCategory(res.data._id)))
       .catch(err => this.props.dispatch(deleteCategoryError(err)));
   };
 

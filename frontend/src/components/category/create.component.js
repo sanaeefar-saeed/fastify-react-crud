@@ -3,7 +3,7 @@ import axios from "axios";
 import Switch from "react-switch";
 import ImageUploader from "react-images-upload";
 import {connect} from "react-redux";
-import {createCategoryError} from "../../actions/categoryActions";
+import {addCategory, addCategoryError} from "../../actions/categoryActions";
 
 class CreateCategory extends Component {
   state = {
@@ -51,8 +51,11 @@ class CreateCategory extends Component {
 
     axios
       .post("http://localhost:4000/api/categories", newCategory)
-      .then(res => this.clearInputs())
-      .catch(err => this.props.dispatch(createCategoryError(err)));
+      .then(res => {
+        this.props.dispatch(addCategory(res.data));
+        this.clearInputs()
+      })
+      .catch(err => this.props.dispatch(addCategoryError(err)));
   };
 
   submitValidation = () => {
