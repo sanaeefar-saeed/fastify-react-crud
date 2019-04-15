@@ -106,6 +106,14 @@ class CreateCategory extends Component {
             >
               Save Category
             </button>
+            <button
+              style={{marginLeft: 20}}
+              type="reset"
+              className="btn btn-secondary"
+              onClick={this.clearInputs}
+            >
+              Reset
+            </button>
           </div>
         </form>
       </div>

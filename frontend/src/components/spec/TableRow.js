@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const TableRow = props => {
   const deleteItem = () => {
@@ -8,11 +8,9 @@ const TableRow = props => {
   /** @namespace props.spec */
   return (
     <tr>
+      <td>{props.spec._id}</td>
       <td>{props.spec.specName}</td>
       <td>{props.spec.specValue}</td>
-      <td>
-        <img src={props.spec.image} alt="not found" width={70} height={70} />
-      </td>
       <td>
         <Link to={"/spec/edit/" + props.spec._id} className="btn btn-primary">
           Edit
@@ -27,4 +25,4 @@ const TableRow = props => {
   );
 };
 
-export default TableRow;
+export default TableRow

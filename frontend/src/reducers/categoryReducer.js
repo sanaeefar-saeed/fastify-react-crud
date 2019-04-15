@@ -14,9 +14,9 @@ const initialState = {
   categories: [],
   isFetchingCategory: true,
   errors: {
-    createCategoryError: false,
-    editCategoryError: false,
     fetchCategoryError: false,
+    addCategoryError: false,
+    editCategoryError: false,
     deleteProductError: false
   }
 };
@@ -59,19 +59,12 @@ const categoryReducer = (state = initialState, action) => {
           fetchCategoryError: action.err
         }
       };
-    case DELETE_CATEGORY_ERROR:
-      return {
-        ...state,
-        errors: {
-          deleteCategoryError: action.err
-        }
-      };
     case ADD_CATEGORY_ERROR:
       return {
         ...state,
         errors: {
           ...state.errors,
-          createCategoryError: action.err
+          addCategoryError: action.err
         }
       };
     case EDIT_CATEGORY_ERROR:
@@ -80,6 +73,13 @@ const categoryReducer = (state = initialState, action) => {
         errors: {
           ...state.errors,
           editCategoryError: action.err
+        }
+      };
+    case DELETE_CATEGORY_ERROR:
+      return {
+        ...state,
+        errors: {
+          deleteCategoryError: action.err
         }
       };
     default:

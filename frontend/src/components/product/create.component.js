@@ -308,8 +308,11 @@ class CreateProduct extends Component {
             </button>
             <button
               style={{marginLeft: 20}}
-              type="reset" className="btn btn-secondary">
-              Discard Changes
+              type="reset"
+              className="btn btn-secondary"
+              onClick={this.clearInputs}
+            >
+              Reset
             </button>
           </div>
         </form>

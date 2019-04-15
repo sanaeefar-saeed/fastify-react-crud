@@ -14,10 +14,10 @@ const initialState = {
   products: [],
   isFetchingProduct: true,
   errors: {
-    createProductError: false,
+    addProductError: false,
     editProductError: false,
-    fetchProductError: false,
-    deleteProductError: false
+    deleteProductError: false,
+    fetchProductError: false
   }
 };
 
@@ -56,7 +56,7 @@ const productReducer = (state = initialState, action) => {
         ...state,
         errors: {
           ...state.errors,
-          createProductError: action.err
+          addProductError: action.err
         }
       };
     case (EDIT_PRODUCT_ERROR):
@@ -67,20 +67,20 @@ const productReducer = (state = initialState, action) => {
           editProductError: action.err
         }
       };
-    case (FETCH_PRODUCT_ERROR):
-      return {
-        ...state,
-        errors: {
-          ...state.errors,
-          fetchProductError: action.err
-        }
-      };
     case (DELETE_PRODUCT_ERROR):
       return {
         ...state,
         errors: {
           ...state.errors,
           deleteProductError: action.err
+        }
+      };
+    case (FETCH_PRODUCT_ERROR):
+      return {
+        ...state,
+        errors: {
+          ...state.errors,
+          fetchProductError: action.err
         }
       };
     default:

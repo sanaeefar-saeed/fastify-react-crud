@@ -3,8 +3,7 @@ const fastify = require("fastify")({
   logger: true
 });
 
-// enable CORS for localhost:3000
-// fastify.register(require("fastify-cors"), { origin: true });
+// enable CORS
 fastify.register(require("fastify-cors"));
 
 // Require external modules

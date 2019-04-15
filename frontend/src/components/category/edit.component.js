@@ -55,7 +55,7 @@ class EditCategory extends Component {
 
     axios
       .put("http://localhost:4000/api/categories/" + this.props.match.params.id, editedCategory)
-      .then(res=> {
+      .then(res => {
         this.props.dispatch(updateCategory(res.data));
         this.props.history.push("/category/index")
       })
@@ -64,7 +64,7 @@ class EditCategory extends Component {
 
   submitValidation = () => Boolean(this.state.categoryName);
 
-  handleDiscardChange = () => this.props.history.push("/category/index");
+  discardChanges = ()=> this.props.history.push("/category/index");
 
   render() {
     return (
@@ -115,7 +115,7 @@ class EditCategory extends Component {
               style={{marginLeft: 20}}
               type="reset"
               className="btn btn-secondary"
-              onClick={this.handleDiscardChange}
+              onClick={this.discardChanges}
             >
               Discard Changes
             </button>

@@ -150,7 +150,7 @@ class EditProduct extends Component {
       Boolean(this.state.productName);
   };
 
-  handleDiscardChange = () => this.props.history.push("/product/index");
+  discardChanges = () => this.props.history.push("/product/index");
 
   render() {
     return (
@@ -317,7 +317,7 @@ class EditProduct extends Component {
               style={{marginLeft: 20}}
               type="reset"
               className="btn btn-secondary"
-              onClick={this.handleDiscardChange}
+              onClick={this.discardChanges}
             >
               Discard Changes
             </button>
