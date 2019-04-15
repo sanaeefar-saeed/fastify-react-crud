@@ -38,7 +38,6 @@ class SpecIndex extends Component {
               <th>ID</th>
               <th>Spec Name</th>
               <th>Image</th>
-              <th>Add Spec</th>
               <th>Edit Spec</th>
               <th>Remove Spec</th>
             </tr>

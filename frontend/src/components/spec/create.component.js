@@ -8,6 +8,7 @@ import { createSpecError } from "../../actions/specActions";
 class CreateSpec extends Component {
   state = {
     specName: "",
+    specValue: "",
     isVisible: false,
     image: null
   };
@@ -15,6 +16,7 @@ class CreateSpec extends Component {
   clearInputs = () => {
     this.setState({
       specName: "",
+      specValue: "",
       isVisible: false,
       image: null
     });
@@ -25,6 +27,8 @@ class CreateSpec extends Component {
   }
 
   onChangeSpecsName = e => this.setState({ specName: e.target.value });
+
+  onChangeSpecsValue = e => this.setState({ specValue: e.target.value });
 
   onDropImage = file => {
     const reader = new FileReader();
@@ -39,6 +43,7 @@ class CreateSpec extends Component {
 
     const newSpecs = {
       specName: this.state.specName,
+      specValue: this.state.specValue,
       parentId: this.props.match.params.id,
       isVisible: this.state.isVisible,
       image: this.state.image
@@ -52,7 +57,7 @@ class CreateSpec extends Component {
   };
 
   submitValidation = () => {
-    return Boolean(this.state.specName);
+    return Boolean(this.state.specName) && Boolean(this.state.specValue);
   };
 
   render() {
@@ -67,6 +72,15 @@ class CreateSpec extends Component {
               className="form-control"
               value={this.state.specName}
               onChange={this.onChangeSpecsName}
+            />
+          </div>
+          <div className="form-group">
+            <label>Specs Value: </label>
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.specValue}
+              onChange={this.onChangeSpecsValue}
             />
           </div>
           <div className="form-group">

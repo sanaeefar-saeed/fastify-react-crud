@@ -12,6 +12,7 @@ import {
 class EditSpec extends Component {
   state = {
     specName: "",
+    specValue: "",
     isVisible: false,
     image: null
   };
@@ -22,6 +23,7 @@ class EditSpec extends Component {
       .then(response => {
         this.setState({
           specName: response.data.specName,
+          specValue: response.data.specValue,
           isVisible: response.data.isVisible,
           image: response.data.image
         });
@@ -30,6 +32,8 @@ class EditSpec extends Component {
   }
 
   onChangeSpecName = e => this.setState({ specName: e.target.value });
+
+  onChangeSpecValue = e => this.setState({ specValue: e.target.value });
 
   onVisibilityChange = checked => this.setState({ isVisible: checked });
 
@@ -46,6 +50,7 @@ class EditSpec extends Component {
 
     const editedSpec = {
       specName: this.state.specName,
+      specValue: this.state.specValue,
       isVisible: this.state.isVisible,
       image: this.state.image
     };
@@ -64,7 +69,8 @@ class EditSpec extends Component {
     this.props.history.push("/spec/index");
   };
 
-  submitValidation = () => Boolean(this.state.specName);
+  submitValidation = () =>
+    Boolean(this.state.specName) && Boolean(this.state.specValue);
 
   render() {
     return (
@@ -78,6 +84,15 @@ class EditSpec extends Component {
               className="form-control"
               value={this.state.specName}
               onChange={this.onChangeSpecName}
+            />
+          </div>
+          <div className="form-group">
+            <label>Spec Value: </label>
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.specValue}
+              onChange={this.onChangeSpecValue}
             />
           </div>
           <div className="form-group">

@@ -1,31 +1,20 @@
-import React from "react"
-import {Link} from "react-router-dom"
+import React from "react";
+import { Link } from "react-router-dom";
 
 const TableRow = props => {
   const deleteItem = () => {
-    props.onDelete(props.category._id)
+    props.onDelete(props.spec._id);
   };
-  /** @namespace props.category */
+  /** @namespace props.spec */
   return (
     <tr>
-      <td>{props.category.parentId}</td>
-      <td>{props.category.categoryName}</td>
+      <td>{props.spec.specName}</td>
+      <td>{props.spec.specValue}</td>
       <td>
-        <img src={props.category.image} alt='not found' width={70} height={70}/>
+        <img src={props.spec.image} alt="not found" width={70} height={70} />
       </td>
       <td>
-        <Link
-          to={"/category/create/" + props.category._id}
-          className="btn btn-primary"
-        >
-          Add
-        </Link>
-      </td>
-      <td>
-        <Link
-          to={"/category/edit/" + props.category._id}
-          className="btn btn-primary"
-        >
+        <Link to={"/spec/edit/" + props.spec._id} className="btn btn-primary">
           Edit
         </Link>
       </td>
@@ -35,7 +24,7 @@ const TableRow = props => {
         </button>
       </td>
     </tr>
-  )
+  );
 };
 
-export default TableRow
+export default TableRow;
