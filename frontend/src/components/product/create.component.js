@@ -1,4 +1,6 @@
 import React, {Component} from "react";
+import RenderSpecField from './renderSpecField'
+import SpecField from './specField'
 import axios from "axios";
 import Switch from "react-switch";
 import ImageUploader from "react-images-upload";
@@ -22,7 +24,10 @@ class CreateProduct extends Component {
     guarantee: '',
     return: '',
     brand: '',
-    visibility: false
+    visibility: false,
+    addSpecStatus: false,
+    specifications: [],
+    specs: []
   };
 
   clearInputs = () => {
@@ -43,12 +48,18 @@ class CreateProduct extends Component {
       guarantee: '',
       return: '',
       brand: '',
-      visibility: false
+      visibility: false,
+      addSpecStatus: false,
+      specifications: [],
+      specs: []
     });
   };
 
   componentDidMount() {
-    this.setState({categories: this.props.categories})
+    this.setState({
+      categories: this.props.categories,
+      specs: this.props.specs
+    });
   }
 
   changePrimeCategoryId = e => this.setState({primeCategoryId: e.target.value,});
@@ -108,6 +119,21 @@ class CreateProduct extends Component {
 
   changeVisibility = checked => this.setState({visibility: checked});
 
+  changeSpecStatus = () => this.setState({addSpecStatus: !this.state.addSpecStatus});
+
+  addSpecToProduct = (specId) => {
+    const newSpec = this.state.specs.filter(spec => spec._id === specId);
+    this.setState(prevState => ({
+      specifications: [...prevState.specifications, newSpec[0]],
+      addSpecStatus: false
+    }))
+  };
+
+  deleteSpec = (specId) => {
+    const newSpecifications = this.state.specifications.filter(spec => spec._id !== specId);
+    this.setState({specifications: newSpecifications})
+  };
+
   onSubmit = e => {
     e.preventDefault();
 
@@ -126,7 +152,8 @@ class CreateProduct extends Component {
       guarantee: this.state.guarantee,
       return: this.state.return,
       brand: this.state.brand,
-      visibility: this.state.visibility
+      visibility: this.state.visibility,
+      specifications: this.state.specifications
     };
 
     axios
@@ -297,6 +324,28 @@ class CreateProduct extends Component {
               />
             </label>
           </div>
+          <div id={'specifications'}>
+            <h4>Specifications</h4>
+            <RenderSpecField
+              specifications={this.state.specifications}
+              deleteSpec={this.deleteSpec}
+            />
+            {this.state.addSpecStatus
+              ? <SpecField
+                changeSpecStatus={this.changeSpecStatus}
+                addSpecToProduct={this.addSpecToProduct}
+                specs={this.state.specs}/>
+              : null
+            }
+            <button
+              style={{marginTop: 10, marginBottom: 20}}
+              type="button"
+              className="btn btn-primary"
+              onClick={this.changeSpecStatus}
+            >
+              Add Specification
+            </button>
+          </div>
           <div className="form-group">
             <button
               type="submit"
@@ -322,7 +371,10 @@ class CreateProduct extends Component {
 }
 
 const mapStateToProps = state => {
-  return {categories: state.categoryReducer.categories}
+  const categories = state.categoryReducer.categories;
+  const specs = state.specReducer.specs;
+
+  return {categories, specs}
 };
 
 export default connect(mapStateToProps)(CreateProduct);
