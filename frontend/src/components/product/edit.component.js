@@ -22,7 +22,7 @@ class EditProduct extends Component {
     discount: '',
     salePrice: '',
     description: '',
-    image: null,
+    images: [],
     video: null,
     weight: '',
     guarantee: '',
@@ -48,7 +48,7 @@ class EditProduct extends Component {
           discount: res.data.discount,
           salePrice: res.data.salePrice,
           description: res.data.description,
-          image: res.data.image,
+          images: res.data.images,
           video: res.data.video,
           weight: res.data.weight,
           guarantee: res.data.guarantee,
@@ -97,10 +97,21 @@ class EditProduct extends Component {
 
   changeDescription = e => this.setState({description: e.target.value});
 
-  onDropImage = file => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file[0]);
-    reader.onload = e => this.setState({image: e.target.result});
+  onDropImage = files => {
+    const length = files.length;
+    // don't use map function instead of for lop here
+    for (let i = 0; i < length; i++) {
+      const reader = new FileReader();
+      reader.readAsDataURL(files[i]);
+      reader.onload = e => this.setState(prevState => ({
+        images: [...prevState.images, e.target.result]
+      }));
+    }
+  };
+
+  removeImage = (imageUrl) => {
+    const images = this.state.images.filter(image => image !== imageUrl.image);
+    this.setState({images: images})
   };
 
   onDropVideo = file => {
@@ -146,7 +157,7 @@ class EditProduct extends Component {
       discount: this.state.discount,
       salePrice: this.state.salePrice,
       description: this.state.description,
-      image: this.state.image,
+      images: this.state.images,
       video: this.state.video,
       weight: this.state.weight,
       guarantee: this.state.guarantee,
@@ -249,15 +260,37 @@ class EditProduct extends Component {
               onChange={this.changeDescription}
             />
           </div>
-          <div className="form-group">
-            <label>Product Images </label>
-            <ImageUploader
-              withIcon={true}
-              buttonText="Choose images"
-              onChange={this.onDropImage}
-              imgExtension={[".jpg", ".gif", ".png"]}
-              maxFileSize={5242880}
-            />
+          <div id='imageSection'>
+            <div className="form-group">
+              <label>Category Images</label>
+              <ImageUploader
+                fileContainerStyle={{backgroundColor: '#e6ecf7'}}
+                withIcon={true}
+                buttonText="Choose image"
+                onChange={this.onDropImage}
+                imgExtension={[".jpg", ".gif", ".png", ".jpeg"]}
+                maxFileSize={5242880}
+              />
+            </div>
+            <div id='showImages'
+                 style={{
+                   flex: 1,
+                   flexDirection: 'row',
+                   marginTop: 20,
+                   marginBottom: 20,
+                 }}>
+              {[...new Set(Object.values(this.state.images))].map(image => (
+                <img
+                  key={image}
+                  src={image}
+                  alt={'not found'}
+                  width={100}
+                  height={100}
+                  style={{marginRight: 20}}
+                  onClick={() => this.removeImage({image})}
+                />
+              ))}
+            </div>
           </div>
           <div className="form-group">
             <label>Product Videos: </label>

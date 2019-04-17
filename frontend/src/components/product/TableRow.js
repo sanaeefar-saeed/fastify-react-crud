@@ -10,7 +10,7 @@ const TableRow = props => {
   return (
     <tr>
       <td>
-        <img src={props.product.image} alt='not found' width={40} height={40}/>
+        <img src={props.product.images[0]} alt='not found' width={40} height={40}/>
       </td>
       <td>{props.product.productName}</td>
       <td>{props.product.price}</td>
