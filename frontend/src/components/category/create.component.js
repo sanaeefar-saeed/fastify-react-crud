@@ -106,6 +106,7 @@ class CreateCategory extends Component {
                 fileContainerStyle={{backgroundColor: '#e6ecf7'}}
                 withIcon={true}
                 buttonText="Choose image"
+                label={'Max file size: 5mb, accepted: jpg - gif - png - jpeg'}
                 onChange={this.onDropImage}
                 imgExtension={[".jpg", ".gif", ".png", ".jpeg"]}
                 maxFileSize={5242880}
