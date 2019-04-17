@@ -1,15 +1,17 @@
 import React, {Component} from "react";
-import RenderSpecField from "./renderSpecField";
+import RenderSpecField from "./renderSpecField"
 import SpecField from './specField'
-import axios from "axios";
-import Switch from "react-switch";
-import ImageUploader from "react-images-upload";
-import {connect} from "react-redux";
+import axios from "axios"
+import Switch from "react-switch"
+import ImageUploader from "react-images-upload"
+import {connect} from "react-redux"
 import {
   updateProduct,
   editProductError,
   fetchProductError,
-} from "../../actions/productActions";
+} from "../../actions/productActions"
+import Dropzone from "react-dropzone"
+import VideoThumbnail from 'react-video-thumbnail'
 
 class EditProduct extends Component {
   state = {
@@ -23,7 +25,7 @@ class EditProduct extends Component {
     salePrice: '',
     description: '',
     images: [],
-    video: null,
+    videos: [],
     weight: '',
     guarantee: '',
     return: '',
@@ -49,7 +51,7 @@ class EditProduct extends Component {
           salePrice: res.data.salePrice,
           description: res.data.description,
           images: res.data.images,
-          video: res.data.video,
+          videos: res.data.videos,
           weight: res.data.weight,
           guarantee: res.data.guarantee,
           return: res.data.return,
@@ -114,10 +116,23 @@ class EditProduct extends Component {
     this.setState({images: images})
   };
 
-  onDropVideo = file => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file[0]);
-    reader.onload = e => this.setState({video: e.target.result});
+  onDropVideo = files => {
+    this.setState({uploadVideo: true});
+    const length = files.length;
+    // don't use map function instead of for lop here
+    for (let i = 0; i < length; i++) {
+      const reader = new FileReader();
+      reader.readAsDataURL(files[i]);
+      reader.onload = e => this.setState(prevState => ({
+        videos: [...prevState.videos, e.target.result],
+        uploadVideo: false
+      }));
+    }
+  };
+
+  removeVideo = (videoUrl) => {
+    const newVideos = this.state.videos.filter(video => video !== videoUrl.video);
+    this.setState({videos: newVideos})
   };
 
   changeWeight = e => this.setState({weight: e.target.value});
@@ -158,7 +173,7 @@ class EditProduct extends Component {
       salePrice: this.state.salePrice,
       description: this.state.description,
       images: this.state.images,
-      video: this.state.video,
+      videos: this.state.videos,
       weight: this.state.weight,
       guarantee: this.state.guarantee,
       return: this.state.return,
@@ -292,15 +307,43 @@ class EditProduct extends Component {
               ))}
             </div>
           </div>
-          <div className="form-group">
-            <label>Product Videos: </label>
-            <ImageUploader
-              withIcon={true}
-              buttonText="Choose Videos"
-              onChange={this.onDropVideo}
-              imgExtension={[".mp4", ".3gp", ".vob"]}
-              maxFileSize={26214400}
-            />
+          <div id='videoSection'>
+            <div className="form-group">
+              <h5>
+                <label>Product Videos</label>
+              </h5>
+              <Dropzone onDrop={this.onDropVideo}>
+                {({getRootProps, getInputProps}) => (
+                  <section>
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()}/>
+                      <button className="btn btn-primary btn-lg btn-block">Drop some videos here, or click to select
+                        videos
+                      </button>
+                    </div>
+                  </section>
+                )}
+              </Dropzone>
+            </div>
+            {this.state.uploadVideo ? <div className="spinner-grow" role="status"/> : null}
+            <div style={{
+              flex: 1,
+              flexDirection: 'row',
+              marginTop: 20
+            }}>
+              {[...new Set(Object.values(this.state.videos))].map(video => (
+                <div
+                  key={video}
+                  onClick={() => this.removeVideo({video})}
+                >
+                  <VideoThumbnail
+                    videoUrl={video}
+                    width={240}
+                    height={160}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
           <div className="form-group">
             <label>Weight</label>
