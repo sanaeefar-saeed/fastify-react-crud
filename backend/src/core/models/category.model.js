@@ -6,7 +6,7 @@ const categorySchema = new mongoose.Schema({
   parentId: String,
   isRootCategory: Boolean,
   isVisible: Boolean,
-  image: Object
+  images: Object
 });
 
 module.exports = mongoose.model("Category", categorySchema);

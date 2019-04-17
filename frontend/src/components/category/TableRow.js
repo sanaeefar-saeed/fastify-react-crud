@@ -11,7 +11,7 @@ const TableRow = props => {
       <td>{props.category.parentId}</td>
       <td>{props.category.categoryName}</td>
       <td>
-        <img src={props.category.image} alt='not found' width={70} height={70}/>
+        <img src={props.category.images[0]} alt='not found' width={70} height={70}/>
       </td>
       <td>
         <Link
