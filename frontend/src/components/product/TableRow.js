@@ -1,34 +1,67 @@
-import React from "react";
+import React, {Component} from "react";
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import {toggleSelectProduct} from '../../actions/productActions'
+import {addProductToRendered, removeProductFromRendered} from "../../actions/filterActions";
 
-const TableRow = props => {
-
-  const deleteItem = () => {
-    props.onDelete(props.product._id)
+class TableRow extends Component {
+  state = {
+    checked: false,
   };
 
-  return (
-    <tr>
-      <td>
-        <img src={props.product.images[0]} alt='not found' width={40} height={40}/>
-      </td>
-      <td>{props.product.productName}</td>
-      <td>{props.product.price}</td>
-      <td>
-        {props.product.visibility ? <p>&#10004;</p> : <p>&#10006;</p>}
-      </td>
-      <td>
-        <Link to={"/product/edit/" + props.product._id} className="btn btn-primary">
-          Edit
-        </Link>
-      </td>
-      <td>
-        <button onClick={deleteItem} className="btn btn-danger">
-          Delete
-        </button>
-      </td>
-    </tr>
-  );
-};
+  componentDidMount() {
+    this.props.dispatch(addProductToRendered(this.props.product._id))
+  }
 
-export default TableRow
+  componentWillUnmount() {
+    this.props.dispatch(removeProductFromRendered(this.props.product._id))
+  }
+
+  handleToggle = (id) => {
+    this.setState(prevState => ({
+      checked: !prevState.checked
+    }), () => this.props.dispatch(toggleSelectProduct({id: id, bool: this.state.checked})));
+  };
+
+  deleteItem = () => {
+    this.props.onDelete(this.props.product._id)
+  };
+
+  render() {
+    const {product} = this.props;
+    return (
+      <tr>
+        <td style={{paddingLeft: 50}}>
+          <input
+            type="checkbox"
+            className="form-check-input"
+            checked={product.selected}
+            onChange={() => this.handleToggle(product._id)}/>
+        </td>
+        <td>
+          <img src={product.images[0]} alt='not found' width={40} height={40}/>
+        </td>
+        <td>{product.productName}</td>
+        <td>{product.price}</td>
+        <td>
+          {product.visibility ? <p>&#10004;</p> : <p>&#10006;</p>}
+        </td>
+        <td>
+          <Link to={"/product/edit/" + product._id} className="btn btn-primary">
+            Edit
+          </Link>
+        </td>
+        <td>
+          <button
+            className="btn btn-danger"
+            onClick={() => this.deleteItem(product._id)}
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    )
+  }
+}
+
+export default connect()(TableRow)

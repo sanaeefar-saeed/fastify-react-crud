@@ -30,7 +30,8 @@ class CreateProduct extends Component {
     visibility: false,
     addSpecStatus: false,
     specifications: [],
-    specs: []
+    specs: [],
+    selected: false
   };
 
   clearInputs = () => {
@@ -61,8 +62,8 @@ class CreateProduct extends Component {
 
   componentDidMount() {
     this.setState({
-      categories: this.props.categories,
-      specs: this.props.specs
+      // categories: this.props.categories,
+      // specs: this.props.specs
     });
   }
 
@@ -150,7 +151,7 @@ class CreateProduct extends Component {
   changeSpecStatus = () => this.setState({addSpecStatus: !this.state.addSpecStatus});
 
   addSpecToProduct = (specId) => {
-    const newSpec = this.state.specs.filter(spec => spec._id === specId);
+    const newSpec = this.props.specs.filter(spec => spec._id === specId);
     this.setState(prevState => ({
       specifications: [...prevState.specifications, newSpec[0]],
       addSpecStatus: false
@@ -181,7 +182,8 @@ class CreateProduct extends Component {
       return: this.state.return,
       brand: this.state.brand,
       visibility: this.state.visibility,
-      specifications: this.state.specifications
+      specifications: this.state.specifications,
+      selected: false
     };
 
     axios
@@ -211,7 +213,7 @@ class CreateProduct extends Component {
               onChange={this.changePrimeCategoryId}
             >
               <option value="">--Choose main category--</option>
-              {this.state.categories
+              {this.props.categories
                 .filter(category => category.isRootCategory)
                 .map(category => (
                   <option
@@ -229,7 +231,7 @@ class CreateProduct extends Component {
               onChange={this.changeCategoryId}
             >
               <option value="">--Choose category--</option>
-              {this.state.categories
+              {this.props.categories
                 .filter(category => category.parentId === this.state.primeCategoryId)
                 .map(category => (
                   <option
@@ -415,7 +417,7 @@ class CreateProduct extends Component {
               ? <SpecField
                 changeSpecStatus={this.changeSpecStatus}
                 addSpecToProduct={this.addSpecToProduct}
-                specs={this.state.specs}/>
+                specs={this.props.specs}/>
               : null
             }
             <button

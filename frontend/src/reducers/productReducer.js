@@ -3,6 +3,7 @@ import {
   ADD_PRODUCT,
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
+  TOGGLE_SELECT_PRODUCT,
   IS_FETCHING_PRODUCT,
   CREATE_PRODUCT_ERROR,
   EDIT_PRODUCT_ERROR,
@@ -45,6 +46,18 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         products: state.products.filter(product => product._id !== action.id)
+      };
+    case(TOGGLE_SELECT_PRODUCT):
+      return {
+        ...state,
+        products: state.products.map(product => {
+          if (product._id === action.payload.id) {
+            return {
+              ...product,
+              selected: action.payload.bool
+            }
+          } else return product
+        })
       };
     case (IS_FETCHING_PRODUCT):
       return {

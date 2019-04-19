@@ -15,7 +15,6 @@ import VideoThumbnail from 'react-video-thumbnail'
 
 class EditProduct extends Component {
   state = {
-    categories: [],
     primeCategoryId: '',
     categoryId: '',
     productName: '',
@@ -33,7 +32,7 @@ class EditProduct extends Component {
     visibility: false,
     addSpecStatus: false,
     specifications: [],
-    specs: []
+    selected: false
   };
 
   componentDidMount() {
@@ -41,7 +40,6 @@ class EditProduct extends Component {
       .get("http://localhost:4000/api/products/" + this.props.match.params.id)
       .then(res => {
         this.setState({
-          categories: this.props.categories,
           primeCategoryId: res.data.primeCategoryId,
           categoryId: res.data.categoryId,
           productName: res.data.productName,
@@ -58,7 +56,6 @@ class EditProduct extends Component {
           brand: res.data.brand,
           visibility: res.data.visibility,
           specifications: res.data.specifications,
-          specs: this.props.specs
         })
       })
       .catch(err => this.props.dispatch(fetchProductError(err)));
@@ -148,7 +145,7 @@ class EditProduct extends Component {
   changeSpecStatus = () => this.setState({addSpecStatus: !this.state.addSpecStatus});
 
   addSpecToProduct = (specId) => {
-    const newSpec = this.state.specs.filter(spec => spec._id === specId);
+    const newSpec = this.props.specs.filter(spec => spec._id === specId);
     this.setState(prevState => ({
       specifications: [...prevState.specifications, newSpec[0]],
       addSpecStatus: false
@@ -179,7 +176,8 @@ class EditProduct extends Component {
       return: this.state.return,
       brand: this.state.brand,
       visibility: this.state.visibility,
-      specifications: this.state.specifications
+      specifications: this.state.specifications,
+      selected: false
     };
 
     axios
@@ -211,7 +209,7 @@ class EditProduct extends Component {
               onChange={this.changePrimeCategoryId}
             >
               <option value="">--Choose main category--</option>
-              {this.state.categories
+              {this.props.categories
                 .filter(category => category.isRootCategory)
                 .map(category => (
                   <option
@@ -229,7 +227,7 @@ class EditProduct extends Component {
               onChange={this.changeCategoryId}
             >
               <option value="">--Choose category--</option>
-              {this.state.categories
+              {this.props.categories
                 .filter(category => category.parentId === this.state.primeCategoryId)
                 .map(category => (
                   <option
@@ -412,7 +410,7 @@ class EditProduct extends Component {
               ? <SpecField
                 changeSpecStatus={this.changeSpecStatus}
                 addSpecToProduct={this.addSpecToProduct}
-                specs={this.state.specs}/>
+                specs={this.props.specs}/>
               : null
             }
             <button

@@ -17,7 +17,8 @@ const productSchema = new mongoose.Schema({
   return: String,
   brand: String,
   visibility: Boolean,
-  specifications: Array
+  specifications: Array,
+  selected: Boolean
 });
 
 module.exports = mongoose.model("Product", productSchema);

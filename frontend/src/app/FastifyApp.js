@@ -33,13 +33,8 @@ const FastifyApp = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to={"/product/create"} className="nav-link">
-                  NewProduct
-                </Link>
-              </li>
-              <li className="nav-item">
                 <Link to={"/product/index"} className="nav-link">
-                  ListProduct
+                  Products
                 </Link>
               </li>
               <li className="nav-item">
@@ -58,11 +53,7 @@ const FastifyApp = () => {
         <br />
         <h2>EBG Admin Panel</h2> <br />
         <Switch>
-          <Route
-            exact
-            path="/category/create/:id?"
-            component={CreateCategory}
-          />
+          <Route exact path="/category/create/:id?" component={CreateCategory}/>
           <Route path="/category/edit/:id" component={EditCategory} />
           <Route path="/category/index" component={categoryIndex} />
           <Route exact path="/product/create" component={CreateProduct} />
