@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import axios from "axios";
-import TableRow from "./TableRow";
 import {connect} from 'react-redux'
+import {Link} from "react-router-dom";
+import TableRow from "./TableRow";
 import {
   getAllCategories,
   deleteCategory,
@@ -33,6 +34,11 @@ class CategoryIndex extends Component {
     return (
       <div>
         <h3 align="center">Category List</h3>
+        <div id='createNewCategory' style={{display: 'flex', flexDirection: 'row-reverse'}}>
+          <Link to={"/category/create"} className={"btn btn-primary"}>
+            + Create New Category
+          </Link>
+        </div>
         <table className="table table-striped" style={{marginTop: 20}}>
           <thead>
           <tr>

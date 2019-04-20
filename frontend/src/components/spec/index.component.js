@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import axios from "axios";
-import TableRow from "./TableRow";
 import {connect} from "react-redux";
+import {Link} from 'react-router-dom'
+import TableRow from "./TableRow";
 import {
   getAllSpecs,
   isFetchingSpec,
@@ -31,6 +32,11 @@ class SpecIndex extends Component {
     return (
       <div>
         <h3 align="center">Spec List</h3>
+        <div id='createNewSpec' style={{display: 'flex', flexDirection: 'row-reverse'}}>
+          <Link to={"/spec/create"} className={"btn btn-primary"}>
+            + Create New Spec
+          </Link>
+        </div>
         <table className="table table-striped" style={{marginTop: 20}}>
           <thead>
           <tr>

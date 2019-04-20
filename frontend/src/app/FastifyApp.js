@@ -23,13 +23,8 @@ const FastifyApp = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-                <Link to={"/category/create"} className="nav-link">
-                  NewCategory
-                </Link>
-              </li>
-              <li className="nav-item">
                 <Link to={"/category/index"} className="nav-link">
-                  ListCategory
+                  Categories
                 </Link>
               </li>
               <li className="nav-item">
@@ -38,13 +33,8 @@ const FastifyApp = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to={"/spec/create"} className="nav-link">
-                  NewSpecification
-                </Link>
-              </li>
-              <li className="nav-item">
                 <Link to={"/spec/index"} className="nav-link">
-                  ListSpecification
+                  Specifications
                 </Link>
               </li>
             </ul>

@@ -52,7 +52,6 @@ class FilterAndSearchBar extends Component {
             onChange={this.handleSelectAll}
           />
           <label>Select All</label>
-          {this.props.renderedProductsID.map(id => console.log(id))}
         </div>
         <div style={{marginLeft: 20}}>
           <label>Items</label>
