@@ -16,7 +16,6 @@ class FilterAndSearchBar extends Component {
 
   componentDidMount() {
     this.props.dispatch(itemsToShow(10000));
-    // this.props.dispatch(showAllProducts())
   }
 
   componentWillUnmount() {
@@ -29,12 +28,15 @@ class FilterAndSearchBar extends Component {
 
   selectAll = () => {
     this.setState(prevState =>
-      ({selectedAll: !prevState.selectedAll}), () =>
-      this.props.renderedProductsID.map(id =>
-        this.props.dispatch(toggleSelectProduct({
-          id: id,
-          bool: this.state.selectedAll
-        }))));
+        ({selectedAll: !prevState.selectedAll}), () => {
+        this.props.renderedProductsID.map(id =>
+          this.props.dispatch(toggleSelectProduct({
+            id: id,
+            bool: this.state.selectedAll
+          })));
+        this.props.dispatch(showAllProducts())
+      }
+    )
   };
 
   handleChangeCategory = (e) => {
@@ -116,7 +118,7 @@ class FilterAndSearchBar extends Component {
             style={{marginLeft: 5}}
             onChange={this.handleChangeCategory}
           >
-            <option value="">All</option>
+            <option value="">select</option>
             {this.props.categories
               .map(category => (
                 <option
@@ -151,7 +153,6 @@ class FilterAndSearchBar extends Component {
         </div>
         <div style={{marginLeft: 20}}>
           <span role="img" aria-label="search">&#128270;</span>
-          {/*<span role="img" aria-label="search">&#128269;</span>*/}
           <input
             type="text"
             placeholder={'Product name ...'}

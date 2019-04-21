@@ -18,7 +18,6 @@ class ProductIndex extends Component {
   state = {
     searchText: '',
     categoryToShowID: '',
-    visibilityToShow: true,
   };
 
   componentDidMount() {
@@ -51,10 +50,6 @@ class ProductIndex extends Component {
     this.setState({categoryToShowID: value})
   };
 
-  handleVisibilityToShow = (value) => {
-    this.setState({visibilityToShow: value})
-  };
-
   handleSearchProductName = (value) => {
     this.setState({searchText: value})
   };
@@ -78,10 +73,9 @@ class ProductIndex extends Component {
           </div>
         </div>
         <FilterAndSearchBar
-          handleChangeCategory={this.handleChangeCategory}
-          handleVisibilityToShow={this.handleVisibilityToShow}
-          handleSearch={this.handleSearchProductName}
           searchText={this.state.searchText}
+          handleSearch={this.handleSearchProductName}
+          handleChangeCategory={this.handleChangeCategory}
         />
         <table className="table table-striped" style={{marginTop: 20}}>
           <thead>

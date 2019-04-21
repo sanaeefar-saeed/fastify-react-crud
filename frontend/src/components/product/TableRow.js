@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-import {toggleSelectProduct} from '../../actions/productActions'
+import {toggleSelectProduct, showAllProducts} from '../../actions/productActions'
 import {addProductToRendered, removeProductFromRendered} from "../../actions/filterActions";
 
 class TableRow extends Component {
@@ -20,7 +20,10 @@ class TableRow extends Component {
   handleToggle = (id) => {
     this.setState(prevState => ({
       checked: !prevState.checked
-    }), () => this.props.dispatch(toggleSelectProduct({id: id, bool: this.state.checked})));
+    }), () => {
+      this.props.dispatch(toggleSelectProduct({id: id, bool: this.state.checked}));
+      this.props.dispatch(showAllProducts())
+    });
   };
 
   deleteItem = () => {

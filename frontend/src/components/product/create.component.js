@@ -31,6 +31,7 @@ class CreateProduct extends Component {
     addSpecStatus: false,
     specifications: [],
     specs: [],
+    selected: false
   };
 
   clearInputs = () => {
@@ -55,7 +56,8 @@ class CreateProduct extends Component {
       visibility: false,
       addSpecStatus: false,
       specifications: [],
-      specs: []
+      specs: [],
+      selected: false
     });
   };
 
