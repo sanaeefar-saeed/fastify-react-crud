@@ -31,7 +31,6 @@ class CreateProduct extends Component {
     addSpecStatus: false,
     specifications: [],
     specs: [],
-    selected: false
   };
 
   clearInputs = () => {
@@ -102,16 +101,26 @@ class CreateProduct extends Component {
 
   changeDescription = e => this.setState({description: e.target.value});
 
+  // onDropImage = files => {
+  //   const length = files.length;
+  //   // don't use map function instead of for lop here
+  //   for (let i = 0; i < length; i++) {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(files[i]);
+  //     reader.onload = e => this.setState(prevState => ({
+  //       images: [...prevState.images, e.target.result]
+  //     }));
+  //   }
+  // };
+  // new onDropImage with forEach instead of for lop
   onDropImage = files => {
-    const length = files.length;
-    // don't use map function instead of for lop here
-    for (let i = 0; i < length; i++) {
+    files.forEach(image => {
       const reader = new FileReader();
-      reader.readAsDataURL(files[i]);
+      reader.readAsDataURL(image);
       reader.onload = e => this.setState(prevState => ({
         images: [...prevState.images, e.target.result]
       }));
-    }
+    })
   };
 
   removeImage = (imageUrl) => {
@@ -121,16 +130,14 @@ class CreateProduct extends Component {
 
   onDropVideo = files => {
     this.setState({uploadVideo: true});
-    const length = files.length;
-    // don't use map function instead of for lop here
-    for (let i = 0; i < length; i++) {
+    files.forEach(videos => {
       const reader = new FileReader();
-      reader.readAsDataURL(files[i]);
+      reader.readAsDataURL(videos);
       reader.onload = e => this.setState(prevState => ({
         videos: [...prevState.videos, e.target.result],
         uploadVideo: false
       }));
-    }
+    })
   };
 
   removeVideo = (videoUrl) => {
@@ -453,11 +460,12 @@ class CreateProduct extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  const categories = state.categoryReducer.categories;
-  const specs = state.specReducer.specs;
+const
+  mapStateToProps = state => {
+    const categories = state.categoryReducer.categories;
+    const specs = state.specReducer.specs;
 
-  return {categories, specs}
-};
+    return {categories, specs}
+  };
 
-export default connect(mapStateToProps)(CreateProduct);
+export default connect(mapStateToProps)(CreateProduct)

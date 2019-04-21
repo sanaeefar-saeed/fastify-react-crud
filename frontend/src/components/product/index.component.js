@@ -9,17 +9,25 @@ import {
   deleteProduct,
   isFetchingProduct,
   fetchProductError,
-  deleteProductError
+  deleteProductError,
+  showAllProducts
 } from "../../actions/productActions";
 
 class ProductIndex extends Component {
+
+  state = {
+    searchText: '',
+    categoryToShowID: '',
+    visibilityToShow: true,
+  };
 
   componentDidMount() {
     axios
       .get("http://localhost:4000/api/products")
       .then(response => {
         this.props.dispatch(getAllProducts(response.data));
-        this.props.dispatch(isFetchingProduct(false))
+        this.props.dispatch(isFetchingProduct(false));
+        this.props.dispatch(showAllProducts())
       })
       .catch(err => {
         this.props.dispatch(fetchProductError(err))
@@ -37,6 +45,18 @@ class ProductIndex extends Component {
     this.props.products
       .filter(product => product.selected)
       .map(product => this.handleDeleteOneProduct(product._id))
+  };
+
+  handleChangeCategory = (value) => {
+    this.setState({categoryToShowID: value})
+  };
+
+  handleVisibilityToShow = (value) => {
+    this.setState({visibilityToShow: value})
+  };
+
+  handleSearchProductName = (value) => {
+    this.setState({searchText: value})
   };
 
   render() {
@@ -57,7 +77,12 @@ class ProductIndex extends Component {
             </div>
           </div>
         </div>
-        <FilterAndSearchBar/>
+        <FilterAndSearchBar
+          handleChangeCategory={this.handleChangeCategory}
+          handleVisibilityToShow={this.handleVisibilityToShow}
+          handleSearch={this.handleSearchProductName}
+          searchText={this.state.searchText}
+        />
         <table className="table table-striped" style={{marginTop: 20}}>
           <thead>
           <tr>
@@ -71,21 +96,30 @@ class ProductIndex extends Component {
           </tr>
           </thead>
           <tbody>
-          {/*spinner*/}
-          {/*{this.props.isFetchingProduct ? <tr className="spinner-border text-warning"/> : null}*/}
-          {this.props.products.map((product, index) => {
-            if (index <= this.props.itemsToShow - 1) {
-              return (
-                <TableRow
-                  product={product}
-                  key={product._id}
-                  onDelete={this.handleDeleteOneProduct}
-                />
-              );
-            } else {
-              return null
-            }
-          })}
+          {this.props.productsToRender
+            ? this.props.productsToRender
+              .filter(product =>
+                product.primeCategoryId === this.state.categoryToShowID ||
+                product.categoryId === this.state.categoryToShowID)
+              .filter(product => {
+                return !this.state.searchText ||
+                  product.productName.toLowerCase().indexOf(this.state.searchText.toLowerCase()) > -1
+              })
+              .map((product, index) => {
+                if (index <= this.props.itemsToShow - 1) {
+                  return (
+                    <TableRow
+                      product={product}
+                      key={product._id}
+                      onDelete={this.handleDeleteOneProduct}
+                    />
+                  );
+                } else {
+                  return null
+                }
+              })
+            : <></>
+          }
           </tbody>
         </table>
       </div>
@@ -95,11 +129,11 @@ class ProductIndex extends Component {
 
 const mapStateToProps = state => {
   const products = state.productReducer.products;
-  const isFetchingProduct = state.productReducer.isFetchingProduct;
+  const productsToRender = state.productReducer.productsToRender;
   const itemsToShow = state.filterReducer.itemsToShow;
   const renderedProductsID = state.filterReducer.renderedProductsID;
 
-  return {products, isFetchingProduct, itemsToShow, renderedProductsID}
+  return {products, productsToRender, itemsToShow, renderedProductsID}
 };
 
 export default connect(mapStateToProps)(ProductIndex)

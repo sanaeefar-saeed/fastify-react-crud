@@ -8,6 +8,9 @@ const CREATE_PRODUCT_ERROR = "CREATE_PRODUCT_ERROR";
 const EDIT_PRODUCT_ERROR = "EDIT_PRODUCT_ERROR";
 const FETCH_PRODUCT_ERROR = "FETCH_PRODUCT_ERROR";
 const DELETE_PRODUCT_ERROR = "DELETE_PRODUCT_ERROR";
+const SHOW_ALL = "SHOW_ALL";
+const SHOW_AVAILABLE = "SHOW_AVAILABLE";
+const SHOW_UNAVAILABLE = "SHOW_UNAVAILABLE";
 
 const getAllProducts = products => ({type: GET_ALL_PRODUCTS, products});
 const addProduct = product => ({type: ADD_PRODUCT, product});
@@ -19,6 +22,10 @@ const createProductError = err => ({type: CREATE_PRODUCT_ERROR, err});
 const editProductError = err => ({type: EDIT_PRODUCT_ERROR, err});
 const fetchProductError = err => ({type: FETCH_PRODUCT_ERROR, err});
 const deleteProductError = err => ({type: DELETE_PRODUCT_ERROR, err});
+// for control shown products in product.index
+const showAllProducts = () => ({type: SHOW_ALL});
+const showAvailableProducts = () => ({type: SHOW_AVAILABLE});
+const showUnAvailableProducts = () => ({type: SHOW_UNAVAILABLE});
 
 export {
   GET_ALL_PRODUCTS,
@@ -31,6 +38,9 @@ export {
   EDIT_PRODUCT_ERROR,
   FETCH_PRODUCT_ERROR,
   DELETE_PRODUCT_ERROR,
+  SHOW_ALL,
+  SHOW_AVAILABLE,
+  SHOW_UNAVAILABLE,
   getAllProducts,
   addProduct,
   updateProduct,
@@ -40,5 +50,8 @@ export {
   createProductError,
   editProductError,
   fetchProductError,
-  deleteProductError
+  deleteProductError,
+  showAllProducts,
+  showAvailableProducts,
+  showUnAvailableProducts
 };

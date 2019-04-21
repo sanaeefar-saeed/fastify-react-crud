@@ -8,11 +8,15 @@ import {
   CREATE_PRODUCT_ERROR,
   EDIT_PRODUCT_ERROR,
   FETCH_PRODUCT_ERROR,
-  DELETE_PRODUCT_ERROR
+  DELETE_PRODUCT_ERROR,
+  SHOW_ALL,
+  SHOW_AVAILABLE,
+  SHOW_UNAVAILABLE
 } from "../actions/productActions";
 
 const initialState = {
   products: [],
+  productsToRender: [],
   isFetchingProduct: true,
   errors: {
     addProductError: false,
@@ -95,6 +99,21 @@ const productReducer = (state = initialState, action) => {
           ...state.errors,
           fetchProductError: action.err
         }
+      };
+    case (SHOW_ALL):
+      return {
+        ...state,
+        productsToRender: [...state.products]
+      };
+    case (SHOW_AVAILABLE):
+      return {
+        ...state,
+        productsToRender: state.products.filter(product => product.visibility)
+      };
+    case (SHOW_UNAVAILABLE):
+      return {
+        ...state,
+        productsToRender: state.products.filter(product => !product.visibility)
       };
     default:
       return state
