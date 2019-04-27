@@ -1,20 +1,21 @@
-import React, {Component} from "react"
-import axios from "axios"
-import Switch from "react-switch"
-import ImageUploader from 'react-images-upload'
-import {connect} from "react-redux"
+import React, { Component } from "react";
+import axios from "axios";
+import Switch from "react-switch";
+import ImageUploader from "react-images-upload";
+import { connect } from "react-redux";
 import {
   updateCategory,
   editCategoryError,
-  fetchCategoryError,
-} from "../../actions/categoryActions"
+  fetchCategoryError
+} from "../../actions/categoryActions";
 
 class EditCategory extends Component {
   state = {
-    categoryName: '',
+    categoryName: "",
     isRootCategory: false,
     isVisible: false,
-    images: []
+    images: [],
+    parentId: ""
   };
 
   componentDidMount() {
@@ -22,20 +23,48 @@ class EditCategory extends Component {
       .get("http://localhost:4000/api/categories/" + this.props.match.params.id)
       .then(response => {
         this.setState({
+          parentId: response.data.parentId,
           categoryName: response.data.categoryName,
           isRootCategory: response.data.isRootCategory,
           isVisible: response.data.isVisible,
           images: response.data.images
-        })
+        });
       })
-      .catch(err => this.props.dispatch(fetchCategoryError(err)))
+      .catch(err => this.props.dispatch(fetchCategoryError(err)));
   }
 
-  onChangeCategoryName = e => this.setState({categoryName: e.target.value});
+  changeparentId = e => this.setState({ parentId: e.target.value });
 
-  isRootCategoryChange = checked => this.setState({isRootCategory: checked});
+  onChangeCategoryName = e => this.setState({ categoryName: e.target.value });
 
-  onVisibilityChange = (checked) => this.setState({isVisible: checked});
+  isRootCategoryChange = checked => {
+    this.setState({ isRootCategory: checked });
+    this.setState({ parentId: "" });
+  };
+
+  onVisibilityChange = checked => this.setState({ isVisible: checked });
+
+  showParentCategory = () =>
+    this.state.isRootCategory ? (
+      <></>
+    ) : (
+      <div className="form-group">
+        <select
+          className="form-control"
+          value={this.state.parentId}
+          onChange={this.changeparentId}
+        >
+          <option value="">--Parent Category--</option>
+          {this.props.categories
+            .filter(category => category.isRootCategory)
+            .map(category => (
+              <option key={category._id} value={category._id}>
+                {category.categoryName}
+              </option>
+            ))}
+        </select>
+      </div>
+    );
 
   onDropImage = files => {
     const length = files.length;
@@ -43,15 +72,18 @@ class EditCategory extends Component {
     for (let i = 0; i < length; i++) {
       const reader = new FileReader();
       reader.readAsDataURL(files[i]);
-      reader.onload = e => this.setState(prevState => ({
-        images: [...prevState.images, e.target.result]
-      }));
+      reader.onload = e =>
+        this.setState(prevState => ({
+          images: [...prevState.images, e.target.result]
+        }));
     }
   };
 
-  removeImage = (imageUrl) => {
-    const newImages = this.state.images.filter(image => image !== imageUrl.image);
-    this.setState({images: newImages})
+  removeImage = imageUrl => {
+    const newImages = this.state.images.filter(
+      image => image !== imageUrl.image
+    );
+    this.setState({ images: newImages });
   };
 
   onSubmit = e => {
@@ -61,25 +93,31 @@ class EditCategory extends Component {
       categoryName: this.state.categoryName,
       isRootCategory: this.state.isRootCategory,
       isVisible: this.state.isVisible,
-      images: this.state.images
+      images: this.state.images,
+      parentId: this.state.parentId
     };
 
     axios
-      .put("http://localhost:4000/api/categories/" + this.props.match.params.id, editedCategory)
+      .put(
+        "http://localhost:4000/api/categories/" + this.props.match.params.id,
+        editedCategory
+      )
       .then(res => {
         this.props.dispatch(updateCategory(res.data));
-        this.props.history.push("/category/index")
+        this.props.history.push("/category/index");
       })
       .catch(err => this.props.dispatch(editCategoryError(err)));
   };
 
-  submitValidation = () => Boolean(this.state.categoryName);
+  submitValidation = () =>
+    Boolean(this.state.categoryName) &&
+    Boolean(this.state.parentId || this.state.isRootCategory);
 
   discardChanges = () => this.props.history.push("/category/index");
 
   render() {
     return (
-      <div style={{marginTop: 10}}>
+      <div style={{ marginTop: 10 }}>
         <h3 align="center">Update Category</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
@@ -93,22 +131,26 @@ class EditCategory extends Component {
           </div>
           <div className="form-group">
             <label>
-              <span style={{marginRight: 20}}>Root Cat</span>
+              <span style={{ marginRight: 20 }}>Root Cat</span>
               <Switch
                 onChange={this.isRootCategoryChange}
                 checked={this.state.isRootCategory}
               />
             </label>
-            <label style={{marginLeft: 20}}>
-              <span style={{marginRight: 20}}>Visibility</span>
-              <Switch onChange={this.onVisibilityChange} checked={this.state.isVisible}/>
+            <label style={{ marginLeft: 20 }}>
+              <span style={{ marginRight: 20 }}>Visibility</span>
+              <Switch
+                onChange={this.onVisibilityChange}
+                checked={this.state.isVisible}
+              />
             </label>
           </div>
-          <div id='imageSection'>
+          <>{this.showParentCategory()}</>
+          <div id="imageSection">
             <div className="form-group">
               <label>Category Images</label>
               <ImageUploader
-                fileContainerStyle={{backgroundColor: '#e6ecf7'}}
+                fileContainerStyle={{ backgroundColor: "#e6ecf7" }}
                 withIcon={true}
                 buttonText="Choose image"
                 onChange={this.onDropImage}
@@ -116,22 +158,24 @@ class EditCategory extends Component {
                 maxFileSize={5242880}
               />
             </div>
-            <div id='showImages'
-                 style={{
-                   flex: 1,
-                   flexDirection: 'row',
-                   marginTop: 20,
-                   marginBottom: 20,
-                 }}>
+            <div
+              id="showImages"
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                marginTop: 20,
+                marginBottom: 20
+              }}
+            >
               {[...new Set(Object.values(this.state.images))].map(image => (
                 <img
                   key={image}
                   src={image}
-                  alt={'not found'}
+                  alt={"not found"}
                   width={100}
                   height={100}
-                  style={{marginRight: 20}}
-                  onClick={() => this.removeImage({image})}
+                  style={{ marginRight: 20 }}
+                  onClick={() => this.removeImage({ image })}
                 />
               ))}
             </div>
@@ -145,7 +189,7 @@ class EditCategory extends Component {
               Update Category
             </button>
             <button
-              style={{marginLeft: 20}}
+              style={{ marginLeft: 20 }}
               type="reset"
               className="btn btn-secondary"
               onClick={this.discardChanges}
@@ -160,7 +204,7 @@ class EditCategory extends Component {
 }
 
 const mapStateToProps = state => {
-  return {categories: state.categoryReducer.categories}
+  return { categories: state.categoryReducer.categories };
 };
 
-export default connect(mapStateToProps)(EditCategory)
+export default connect(mapStateToProps)(EditCategory);
